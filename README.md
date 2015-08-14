@@ -15,13 +15,15 @@ You can download the last version from:
 
 # Authors
 ### Port authors
-**[Gregory Klushnikov](https://vk.com/grishka)** - idea and the original J2ME to Android port.
-**[Evgeny Zinoviev](https://vk.com/ez)** - porting/levels manager/levels API/graphics/everything else development, graphics.
+
+* **[Gregory Klushnikov](https://vk.com/grishka)** - idea and the original J2ME to Android port.
+* **[Evgeny Zinoviev](https://vk.com/ez)** - porting/levels manager/levels API/graphics/everything else development, graphics.
 
 ### Codebrew GDTR Authors
-**Tors Björn Henrik Johansson** - system/game logic/interface, testing, levels design
-**Set Elis Norman** - graphics/physics/mathematics/system/tools programming, levels design
-**Per David Jacobsson** - physics programming, game graphics, levels design
+
+* **Tors Björn Henrik Johansson** - system/game logic/interface, testing, levels design
+* **Set Elis Norman** - graphics/physics/mathematics/system/tools programming, levels design
+* **Per David Jacobsson** - physics programming, game graphics, levels design
 
 For more information, please visit official site of Codebrew Software: [codebrew.se](http://codebrew.se)
 
