@@ -1,0 +1,55 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.0.0'
+    }
+}
+
+apply plugin: 'com.android.application'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'ch.acra:acra:4.5.0'
+}
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion '23.0.3'
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            resources.srcDirs = ['src']
+            aidl.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+        }
+
+        androidTest.setRoot('tests')
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        compileOptions.encoding = "UTF-8"
+
+        // Use Java 1.7, requires minSdk 8
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+    }
+}
