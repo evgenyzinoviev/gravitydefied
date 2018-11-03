@@ -2,8 +2,7 @@ package org.happysanta.gd.Game;
 
 // Decompiled by Jad v1.5.8f. Copyright 2001 Pavel Kouznetsov.
 // Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) fieldsfirst ansi 
-
+// Decompiler options: packimports(3) fieldsfirst ansi
 
 import org.happysanta.gd.Levels.Loader;
 import org.happysanta.gd.Menu.SimpleMenuElement;
@@ -534,13 +533,9 @@ public class Physics {
             m_XZ = false;
         }
         boolean flag;
-        if ((flag = (m_Hak[2].m_ifan[m_vaI].y - m_Hak[0].m_ifan[m_vaI].y <= 0 ? -1 : 1) * (m_Hak[2].m_ifan[m_vaI].m_eI - m_Hak[0].m_ifan[m_vaI].m_eI <= 0 ? -1 : 1) > 0) && m_wZ || !flag && m_XZ) {
-            m_dZ = true;
-            return;
-        } else {
-            m_dZ = false;
-            return;
-        }
+        m_dZ = (flag = (m_Hak[2].m_ifan[m_vaI].y - m_Hak[0].m_ifan[m_vaI].y <= 0 ? -1 : 1) *
+                (m_Hak[2].m_ifan[m_vaI].m_eI - m_Hak[0].m_ifan[m_vaI].m_eI <= 0 ? -1 : 1) > 0) &&
+                m_wZ || !flag && m_XZ;
     }
 
     private void _qvV() {
@@ -554,8 +549,10 @@ public class Physics {
                 m_cI -= m_charI;
             if (m_FZ) {
                 m_cI = 0;
-                m_Hak[1].m_ifan[m_vaI].m_gotoI = (int) ((long) m_Hak[1].m_ifan[m_vaI].m_gotoI * (long) (0x10000 - m_abI) >> 16);
-                m_Hak[2].m_ifan[m_vaI].m_gotoI = (int) ((long) m_Hak[2].m_ifan[m_vaI].m_gotoI * (long) (0x10000 - m_abI) >> 16);
+                m_Hak[1].m_ifan[m_vaI].m_gotoI = (int) ((long) m_Hak[1].m_ifan[m_vaI].m_gotoI *
+                        (long) (0x10000 - m_abI) >> 16);
+                m_Hak[2].m_ifan[m_vaI].m_gotoI = (int) ((long) m_Hak[2].m_ifan[m_vaI].m_gotoI *
+                        (long) (0x10000 - m_abI) >> 16);
                 if (m_Hak[1].m_ifan[m_vaI].m_gotoI < 6553)
                     m_Hak[1].m_ifan[m_vaI].m_gotoI = 0;
                 if (m_Hak[2].m_ifan[m_vaI].m_gotoI < 6553)
@@ -583,18 +580,17 @@ public class Physics {
             }
             if (m_XZ || m_wZ) {
                 int k1 = -i1;
-                int l1 = j;
                 if (m_XZ && m_kI > -m_longI) {
                     int i2 = 0x10000;
                     if (m_kI < 0)
-                        i2 = (int) (((long) (m_longI - (m_kI >= 0 ? m_kI : -m_kI)) << 32) / (long) m_longI >> 16);
+                        i2 = (int) (((long) (m_longI - -m_kI) << 32) / (long) m_longI >> 16);
                     int k2 = (int) ((long) m_AI * (long) i2 >> 16);
                     int i3 = (int) ((long) k1 * (long) k2 >> 16);
-                    int k3 = (int) ((long) l1 * (long) k2 >> 16);
+                    int k3 = (int) ((long) j * (long) k2 >> 16);
                     int i4 = (int) ((long) j * (long) k2 >> 16);
                     int k4 = (int) ((long) i1 * (long) k2 >> 16);
                     if (m_TI > 32768)
-                        m_TI = m_TI - 1638 >= 0 ? m_TI - 1638 : 0;
+                        m_TI = m_TI - 1638;
                     else
                         m_TI = m_TI - 3276 >= 0 ? m_TI - 3276 : 0;
                     m_Hak[4].m_ifan[m_vaI].m_eI -= i3;
@@ -610,13 +606,13 @@ public class Physics {
                         j2 = (int) (((long) (m_longI - m_kI) << 32) / (long) m_longI >> 16);
                     int l2 = (int) ((long) m_AI * (long) j2 >> 16);
                     int j3 = (int) ((long) k1 * (long) l2 >> 16);
-                    int l3 = (int) ((long) l1 * (long) l2 >> 16);
+                    int l3 = (int) ((long) j * (long) l2 >> 16);
                     int j4 = (int) ((long) j * (long) l2 >> 16);
                     int l4 = (int) ((long) i1 * (long) l2 >> 16);
                     if (m_TI > 32768)
                         m_TI = m_TI + 1638 >= 0x10000 ? 0x10000 : m_TI + 1638;
                     else
-                        m_TI = m_TI + 3276 >= 0x10000 ? 0x10000 : m_TI + 3276;
+                        m_TI = m_TI + 3276;
                     m_Hak[4].m_ifan[m_vaI].m_eI += j3;
                     m_Hak[4].m_ifan[m_vaI].m_dI += l3;
                     m_Hak[3].m_ifan[m_vaI].m_eI -= j3;
@@ -673,9 +669,7 @@ public class Physics {
         int i1 = 0;
         int j1 = j;
         int j2;
-        do {
-            if (i1 >= j)
-                break;
+        while (i1 < j) {
             _aaIV(j1 - i1);
             int k1;
             if (!flag && _longvZ())
@@ -705,9 +699,12 @@ public class Physics {
                 m_vaI = m_vaI != 1 ? 1 : 0;
                 m_waI = m_waI != 1 ? 1 : 0;
             }
-        } while (true);
+        }
         int l1;
-        if ((l1 = (int) ((long) (m_Hak[1].m_ifan[m_vaI].x - m_Hak[2].m_ifan[m_vaI].x) * (long) (m_Hak[1].m_ifan[m_vaI].x - m_Hak[2].m_ifan[m_vaI].x) >> 16) + (int) ((long) (m_Hak[1].m_ifan[m_vaI].y - m_Hak[2].m_ifan[m_vaI].y) * (long) (m_Hak[1].m_ifan[m_vaI].y - m_Hak[2].m_ifan[m_vaI].y) >> 16)) < 0xf0000)
+        if ((l1 = (int) ((long) (m_Hak[1].m_ifan[m_vaI].x - m_Hak[2].m_ifan[m_vaI].x) *
+                (long) (m_Hak[1].m_ifan[m_vaI].x - m_Hak[2].m_ifan[m_vaI].x) >> 16) +
+                (int) ((long) (m_Hak[1].m_ifan[m_vaI].y - m_Hak[2].m_ifan[m_vaI].y) *
+                        (long) (m_Hak[1].m_ifan[m_vaI].y - m_Hak[2].m_ifan[m_vaI].y) >> 16)) < 0xf0000)
             m_IZ = true;
         if (l1 > 0x460000)
             m_IZ = true;
@@ -768,10 +765,8 @@ public class Physics {
         byte byte1 = ((byte) (m_Hak[2].m_ifan[j].m_eI - m_Hak[0].m_ifan[j].m_eI < 0 ? -1 : 1));
         if (byte0 * byte1 > 0) {
             m_kI = j3;
-            return;
         } else {
             m_kI = -j3;
-            return;
         }
     }
 
@@ -850,9 +845,11 @@ public class Physics {
     private int _baII(int j) {
         byte byte0 = 2;
         int i1;
-        i1 = (i1 = m_Hak[1].m_ifan[j].x >= m_Hak[2].m_ifan[j].x ? m_Hak[1].m_ifan[j].x : m_Hak[2].m_ifan[j].x) >= m_Hak[5].m_ifan[j].x ? i1 : m_Hak[5].m_ifan[j].x;
+        i1 = (i1 = m_Hak[1].m_ifan[j].x >= m_Hak[2].m_ifan[j].x ? m_Hak[1].m_ifan[j].x :
+                m_Hak[2].m_ifan[j].x) >= m_Hak[5].m_ifan[j].x ? i1 : m_Hak[5].m_ifan[j].x;
         int j1;
-        j1 = (j1 = m_Hak[1].m_ifan[j].x >= m_Hak[2].m_ifan[j].x ? m_Hak[2].m_ifan[j].x : m_Hak[1].m_ifan[j].x) >= m_Hak[5].m_ifan[j].x ? m_Hak[5].m_ifan[j].x : j1;
+        j1 = (j1 = m_Hak[1].m_ifan[j].x >= m_Hak[2].m_ifan[j].x ? m_Hak[2].m_ifan[j].x :
+                m_Hak[1].m_ifan[j].x) >= m_Hak[5].m_ifan[j].x ? m_Hak[5].m_ifan[j].x : j1;
         m_lf._aIIV(j1 - m_foraI[0], i1 + m_foraI[0], m_Hak[5].m_ifan[j].y);
         int k1 = m_Hak[1].m_ifan[j].x - m_Hak[2].m_ifan[j].x;
         int l1 = m_Hak[1].m_ifan[j].y - m_Hak[2].m_ifan[j].y;
@@ -1008,13 +1005,14 @@ public class Physics {
         int fenderX = (m_aaan[0].x >> 1) + (m_aaan[4].x >> 1);
         int fenderY = (m_aaan[0].y >> 1) + (m_aaan[4].y >> 1);
         int i3 = -j1;
-        int j3 = i1;
         engineX += (int) ((long) i3 * 0x10000L >> 16) - (int) ((long) i1 * 32768L >> 16);
-        engineY += (int) ((long) j3 * 0x10000L >> 16) - (int) ((long) j1 * 32768L >> 16);
+        engineY += (int) ((long) i1 * 0x10000L >> 16) - (int) ((long) j1 * 32768L >> 16);
         fenderX += (int) ((long) i3 * 0x10000L >> 16) - (int) ((long) i1 * 0x1ccccL >> 16);
-        fenderY += (int) ((long) j3 * 0x10000L >> 16) - (int) ((long) j1 * 0x20000L >> 16);
-        view.drawFender((fenderX << 2) / (float) 0xFFFF /*>> 16*/, (fenderY << 2) / (float) 0xFFFF /*>> 16*/, l1);
-        view.drawEngine((engineX << 2) / (float) 0xFFFF /*>> 16*/, (engineY << 2) / (float) 0xFFFF /*>> 16*/, k1);
+        fenderY += (int) ((long) i1 * 0x10000L >> 16) - (int) ((long) j1 * 0x20000L >> 16);
+        view.drawFender((fenderX << 2) / (float) 0xFFFF /*>> 16*/, (fenderY << 2) /
+                (float) 0xFFFF /*>> 16*/, l1);
+        view.drawEngine((engineX << 2) / (float) 0xFFFF /*>> 16*/, (engineY << 2) /
+                (float) 0xFFFF /*>> 16*/, k1);
     }
 
     private void _laiV(GameView view) {
@@ -1035,8 +1033,10 @@ public class Physics {
                 i1 = 0;
                 break;
         }
-        gameView.drawWheel((m_aaan[2].x << 2) / (float) 0xFFFF /*>> 16*/, (m_aaan[2].y << 2) / (float) 0xFFFF /*>> 16*/, i1);
-        gameView.drawWheel((m_aaan[1].x << 2) / (float) 0xFFFF /*>> 16*/, (m_aaan[1].y << 2) / (float) 0xFFFF /*>> 16*/, j1);
+        gameView.drawWheel((m_aaan[2].x << 2) / (float) 0xFFFF /*>> 16*/, (m_aaan[2].y << 2) /
+                (float) 0xFFFF /*>> 16*/, i1);
+        gameView.drawWheel((m_aaan[1].x << 2) / (float) 0xFFFF /*>> 16*/, (m_aaan[1].y << 2) /
+                (float) 0xFFFF /*>> 16*/, j1);
     }
 
     private void _doiV(GameView gameView) {
@@ -1045,10 +1045,14 @@ public class Physics {
         int k1 = (int) ((long) i1 * 45875L >> 16);
         gameView.setColor(0, 0, 0);
         if (getGDActivity().isMenuShown()) {
-            gameView.drawLineWheel((m_aaan[1].x << 2) >> 16, (m_aaan[1].y << 2) >> 16, (i1 + i1 << 2) >> 16);
-            gameView.drawLineWheel((m_aaan[1].x << 2) >> 16, (m_aaan[1].y << 2) >> 16, (j1 + j1 << 2) >> 16);
-            gameView.drawLineWheel((m_aaan[2].x << 2) >> 16, (m_aaan[2].y << 2) >> 16, (i1 + i1 << 2) >> 16);
-            gameView.drawLineWheel((m_aaan[2].x << 2) >> 16, (m_aaan[2].y << 2) >> 16, (k1 + k1 << 2) >> 16);
+            gameView.drawLineWheel((m_aaan[1].x << 2) >> 16, (m_aaan[1].y << 2) >> 16,
+                    (i1 + i1 << 2) >> 16);
+            gameView.drawLineWheel((m_aaan[1].x << 2) >> 16, (m_aaan[1].y << 2) >> 16,
+                    (j1 + j1 << 2) >> 16);
+            gameView.drawLineWheel((m_aaan[2].x << 2) >> 16, (m_aaan[2].y << 2) >> 16,
+                    (i1 + i1 << 2) >> 16);
+            gameView.drawLineWheel((m_aaan[2].x << 2) >> 16, (m_aaan[2].y << 2) >> 16,
+                    (k1 + k1 << 2) >> 16);
         }
 
         // right wheel
@@ -1083,13 +1087,11 @@ public class Physics {
 
         boolean toUpdate = true;
         for (int l3 = 0; l3 < 5; l3++) {
-            if (toUpdate) {
-                // Log.d("AGDTR", "toUpdate is true");
-                leftWheelParams[l3][0] = m_aaan[2].x;
-                leftWheelParams[l3][1] = m_aaan[2].y;
-                leftWheelParams[l3][2] = m_aaan[2].x + l1;
-                leftWheelParams[l3][3] = m_aaan[2].y + i2;
-            }
+            // Log.d("AGDTR", "toUpdate is true");
+            leftWheelParams[l3][0] = m_aaan[2].x;
+            leftWheelParams[l3][1] = m_aaan[2].y;
+            leftWheelParams[l3][2] = m_aaan[2].x + l1;
+            leftWheelParams[l3][3] = m_aaan[2].y + i2;
             // gameView.drawLine(m_aaan[2].x, m_aaan[2].y, m_aaan[2].x + l1, m_aaan[2].y + i2);
             gameView.drawLine(leftWheelParams[l3][0], leftWheelParams[l3][1], leftWheelParams[l3][2], leftWheelParams[l3][3]);
             int j3 = l1;
@@ -1103,8 +1105,10 @@ public class Physics {
             gameView.setColor(255, 0, 0);
             if (m_hI > 2)
                 gameView.setColor(100, 100, 255);
-            gameView.drawLineWheel((m_aaan[2].x << 2) / (float) 0xFFFF /*>> 16*/, (m_aaan[2].y << 2) / (float) 0xFFFF /*>> 16*/, 4);
-            gameView.drawLineWheel((m_aaan[1].x << 2) / (float) 0xFFFF /*>> 16*/, (m_aaan[1].y << 2) / (float) 0xFFFF /*>> 16*/, 4);
+            gameView.drawLineWheel((m_aaan[2].x << 2) / (float) 0xFFFF /*>> 16*/,
+                    (m_aaan[2].y << 2) / (float) 0xFFFF /*>> 16*/, 4);
+            gameView.drawLineWheel((m_aaan[1].x << 2) / (float) 0xFFFF /*>> 16*/,
+                    (m_aaan[1].y << 2) / (float) 0xFFFF /*>> 16*/, 4);
         }
     }
 
@@ -1129,9 +1133,9 @@ public class Physics {
         int j6 = 0;
         int k6 = 0;
         int l6 = 0;
-        int ai[][] = (int[][]) null;
-        int ai1[][] = (int[][]) null;
-        int ai2[][] = (int[][]) null;
+        int ai[][] = null;
+        int ai1[][] = null;
+        int ai2[][] = null;
         if (m_elseZ) {
             if (m_TI < 32768) {
                 ai1 = m_ucaaI;
@@ -1324,7 +1328,8 @@ public class Physics {
             j.setColor(170, 0, 0);
         else
             j.setColor(50, 50, 50);
-        j._ifIIIV((m_aaan[1].x << 2) >> 16, (m_aaan[1].y << 2) >> 16, (m_foraI[0] << 2) >> 16, FPMath._ifIII(i1, j1));
+        j._ifIIIV((m_aaan[1].x << 2) >> 16, (m_aaan[1].y << 2) >> 16,
+                (m_foraI[0] << 2) >> 16, FPMath._ifIII(i1, j1));
         if (!m_IZ)
             _laiV(j);
         _ifiIIV(j, i1, j1, l1, i2);
@@ -1332,5 +1337,4 @@ public class Physics {
             _aiIIV(j, i1, j1, l1, i2);
         m_lf._aiV(j);
     }
-
 }

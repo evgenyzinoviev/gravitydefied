@@ -29,26 +29,25 @@ public class LevelsAdapter extends ArrayAdapter<Level> {
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = convertView;
         if (v == null) {
-            LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater =
+                    (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = inflater.inflate(R.layout.levels_list_item, null);
         }
 
         Level level = levels.get(position);
         if (level != null) {
-            TextView name = (TextView) v.findViewById(R.id.level_name);
-            TextView count = (TextView) v.findViewById(R.id.level_count);
+            TextView name = v.findViewById(R.id.level_name);
+            TextView count = v.findViewById(R.id.level_count);
 
             name.setTypeface(Global.robotoCondensedTypeface);
             count.setTypeface(Global.robotoCondensedTypeface);
 
             name.setText(level.getName());
             count.setText(Html.fromHtml(String.format(getString(R.string.levels_count_tpl),
-                    level.getCountEasy() + " - " + level.getCountMedium() + " - " + level.getCountHard(), level.getShortAddedDate())));
+                    level.getCountEasy() + " - " + level.getCountMedium() + " - " +
+                            level.getCountHard(), level.getShortAddedDate())));
         }
 
         return v;
     }
-
 }
-
-

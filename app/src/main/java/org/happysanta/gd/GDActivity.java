@@ -6,7 +6,6 @@ import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -99,7 +98,7 @@ public class GDActivity extends Activity implements Runnable {
     private boolean buttonCoordsCalculated = false;
     public TextView menuTitleTextView;
     private boolean menuReady = false;
-    private ArrayList<Command> commands = new ArrayList<Command>();
+    private ArrayList<Command> commands = new ArrayList<>();
     private MenuLinearLayout keyboardLayout;
     private MenuTextView portedTextView;
     private int buttonHeight = 60;
@@ -122,17 +121,14 @@ public class GDActivity extends Activity implements Runnable {
                 try {
                     final NotificationsResponse response = new NotificationsResponse(apiResponse);
                     if (!response.isEmpty()) {
-                        final Runnable onOk = new Runnable() {
-                            @Override
-                            public void run() {
-                                if (response.hasURL()) {
-                                    String url = response.getURL();
-                                    try {
-                                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                                        startActivity(browserIntent);
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
+                        final Runnable onOk = () -> {
+                            if (response.hasURL()) {
+                                String url = response.getURL();
+                                try {
+                                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                                    startActivity(browserIntent);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
                             }
                         };
@@ -141,38 +137,19 @@ public class GDActivity extends Activity implements Runnable {
                             AlertDialog.Builder alert = new AlertDialog.Builder(self)
                                     .setTitle(response.getTitle())
                                     .setMessage(response.getMessage())
-                                    .setPositiveButton(response.getOKButton(), new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            onOk.run();
-                                        }
+                                    .setPositiveButton(response.getOKButton(), (dialog, which) -> onOk.run())
+                                    .setNegativeButton(response.getCancelButton(), (dialog, which) -> {
                                     })
-                                    .setNegativeButton(response.getCancelButton(), new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                        }
-                                    })
-                                    .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                                        @Override
-                                        public void onCancel(DialogInterface dialog) {
+                                    .setOnCancelListener(dialog -> {
 
-                                        }
                                     });
                             alert.show();
                         } else {
                             AlertDialog alertDialog = new AlertDialog.Builder(self)
                                     .setTitle(response.getTitle())
                                     .setMessage(response.getMessage())
-                                    .setPositiveButton(response.getOKButton(), new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            onOk.run();
-                                        }
-                                    })
-                                    .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                                        @Override
-                                        public void onCancel(DialogInterface dialog) {
-                                        }
+                                    .setPositiveButton(response.getOKButton(), (dialog, which) -> onOk.run())
+                                    .setOnCancelListener(dialog -> {
                                     })
                                     .create();
                             alertDialog.show();
@@ -189,163 +166,162 @@ public class GDActivity extends Activity implements Runnable {
             }
         });
 
-        if (true) {
-            gameView = new GameView(this);
+        gameView = new GameView(this);
 
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-            scrollView = new ObservableScrollView(this);
-            scrollView.setBackgroundColor(0x00ffffff);
-            scrollView.setFillViewport(true);
-            scrollView.setOnScrollListener(new ObservableScrollView.OnScrollListener() {
-                @Override
-                public void onScroll(ObservableScrollView scrollView, int x, int y, int oldx, int oldy) {
-                    if (isMenuShown() && menu != null && menu.currentMenu != null) {
-                        int h = scrollView.getChildAt(0).getHeight() - scrollView.getHeight();
-                        double p = 100.0 * y / h;
-                        if (p > 100f)
-                            p = 100f;
+        scrollView = new ObservableScrollView(this);
+        scrollView.setBackgroundColor(0x00ffffff);
+        scrollView.setFillViewport(true);
+        scrollView.setOnScrollListener(new ObservableScrollView.OnScrollListener() {
+            @Override
+            public void onScroll(ObservableScrollView scrollView, int x, int y, int oldx, int oldy) {
+                if (isMenuShown() && menu != null && menu.currentMenu != null) {
+                    int h = scrollView.getChildAt(0).getHeight() - scrollView.getHeight();
+                    double p = 100.0 * y / h;
+                    if (p > 100f)
+                        p = 100f;
 
-                        menu.currentMenu.onScroll(p);
-                    }
+                    menu.currentMenu.onScroll(p);
                 }
-            });
-            scrollView.setVisibility(View.GONE);
+            }
+        });
+        scrollView.setVisibility(View.GONE);
 
-            frame = new FrameLayout(this);
-            frame.setBackgroundColor(0xffffffff);
+        frame = new FrameLayout(this);
+        frame.setBackgroundColor(0xffffffff);
 
-            titleLayout = new MenuTitleLinearLayout(this);
-            titleLayout.setBackgroundColor(0x00ffffff);
-            titleLayout.setGravity(Gravity.TOP);
-            titleLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            titleLayout.setPadding(Helpers.getDp(MENU_TITLE_LAYOUT_X_PADDING), Helpers.getDp(MENU_TITLE_LAYOUT_TOP_PADDING), Helpers.getDp(MENU_TITLE_LAYOUT_X_PADDING), Helpers.getDp(MENU_TITLE_LAYOUT_BOTTOM_PADDING));
+        titleLayout = new MenuTitleLinearLayout(this);
+        titleLayout.setBackgroundColor(0x00ffffff);
+        titleLayout.setGravity(Gravity.TOP);
+        titleLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        titleLayout.setPadding(Helpers.getDp(MENU_TITLE_LAYOUT_X_PADDING), Helpers.getDp(MENU_TITLE_LAYOUT_TOP_PADDING), Helpers.getDp(MENU_TITLE_LAYOUT_X_PADDING), Helpers.getDp(MENU_TITLE_LAYOUT_BOTTOM_PADDING));
 
-            menuTitleTextView = new TextView(this);
-            menuTitleTextView.setText(getString(R.string.main));
-            menuTitleTextView.setTextColor(0xff000000);
-            menuTitleTextView.setTypeface(Global.robotoCondensedTypeface);
-            menuTitleTextView.setTextSize(MENU_TITLE_FONT_SIZE);
-            menuTitleTextView.setLineSpacing(0f, 1.1f);
-            menuTitleTextView.setLayoutParams(new ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-            ));
-            menuTitleTextView.setVisibility(android.view.View.GONE);
+        menuTitleTextView = new TextView(this);
+        menuTitleTextView.setText(getString(R.string.main));
+        menuTitleTextView.setTextColor(0xff000000);
+        menuTitleTextView.setTypeface(Global.robotoCondensedTypeface);
+        menuTitleTextView.setTextSize(MENU_TITLE_FONT_SIZE);
+        menuTitleTextView.setLineSpacing(0f, 1.1f);
+        menuTitleTextView.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        ));
+        menuTitleTextView.setVisibility(View.GONE);
 
-            titleLayout.addView(menuTitleTextView);
+        titleLayout.addView(menuTitleTextView);
 
-            scrollView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1));
+        scrollView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1));
 
-            // Keyboard
-            String[] buttonResources = {
-                    "btn_br", "btn_br", "btn_b",
-                    "btn_br", "btn_br", "btn_b",
-                    "btn_r", "btn_r", "btn_n"
-            };
-            if (getString(R.string.screen_type).equals("tablet")) {
-                buttonHeight = 85;
-            } else if (Global.density < 1.5) {
-                buttonHeight = 55;
+        // Keyboard
+        String[] buttonResources = {
+                "btn_br", "btn_br", "btn_b",
+                "btn_br", "btn_br", "btn_b",
+                "btn_r", "btn_r", "btn_n"
+        };
+        if (getString(R.string.screen_type).equals("tablet")) {
+            buttonHeight = 85;
+        } else if (Global.density < 1.5) {
+            buttonHeight = 55;
+        }
+
+        keyboardLayout = new MenuLinearLayout(this, true);
+        keyboardLayout.setOrientation(LinearLayout.VERTICAL);
+
+        keyboardController = new KeyboardController(this);
+
+        for (int i = 0; i < 3; i++) {
+            LinearLayout row = new LinearLayout(this);
+            row.setPadding(Helpers.getDp(KeyboardController.PADDING), i == 0 ? Helpers.getDp(KeyboardController.PADDING) : 0, Helpers.getDp(KeyboardController.PADDING), 0);
+            row.setOrientation(LinearLayout.HORIZONTAL);
+            row.setBackgroundColor(0xc6ffffff);
+            for (int j = 0; j < 3; j++) {
+                LinearLayout btn = new LinearLayout(this);
+                TextView btnText = new TextView(this);
+                btnText.setText(String.valueOf(i * 3 + j + 1));
+                btnText.setTextColor(0xff000000);
+                btnText.setTextSize(17);
+                btn.setBackgroundResource(getResources().getIdentifier(buttonResources[i * 3 + j], "drawable", getPackageName()));
+                btn.addView(btnText, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                btn.setGravity(Gravity.CENTER);
+                btn.setWeightSum(1);
+
+                row.addView(btn, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, Helpers.getDp(buttonHeight), 1));
+
+                keyboardController.addButton(btn, j, i);
             }
 
-            keyboardLayout = new MenuLinearLayout(this, true);
-            keyboardLayout.setOrientation(LinearLayout.VERTICAL);
+            keyboardLayout.addView(row);
+        }
 
-            keyboardController = new KeyboardController(this);
+        keyboardLayout.setGravity(Gravity.BOTTOM);
+        keyboardLayout.setPadding(0, 0, 0, Helpers.getDp(KeyboardController.PADDING));
+        keyboardLayout.setOnTouchListener(keyboardController);
+        keyboardLayout.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM));
 
-            for (int i = 0; i < 3; i++) {
-                LinearLayout row = new LinearLayout(this);
-                row.setPadding(Helpers.getDp(KeyboardController.PADDING), i == 0 ? Helpers.getDp(KeyboardController.PADDING) : 0, Helpers.getDp(KeyboardController.PADDING), 0);
-                row.setOrientation(LinearLayout.HORIZONTAL);
-                row.setBackgroundColor(0xc6ffffff);
-                for (int j = 0; j < 3; j++) {
-                    LinearLayout btn = new LinearLayout(this);
-                    TextView btnText = new TextView(this);
-                    btnText.setText(String.valueOf(i * 3 + j + 1));
-                    btnText.setTextColor(0xff000000);
-                    btnText.setTextSize(17);
-                    btn.setBackgroundResource(getResources().getIdentifier(buttonResources[i * 3 + j], "drawable", getPackageName()));
-                    btn.addView(btnText, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                    btn.setGravity(Gravity.CENTER);
-                    btn.setWeightSum(1);
+        hideKeyboardLayout();
 
-                    row.addView(btn, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, Helpers.getDp(buttonHeight), 1));
-
-                    keyboardController.addButton(btn, j, i);
-                }
-
-                keyboardLayout.addView(row);
+        menuBtn = new MenuImageView(this);
+        menuBtn.setImageResource(R.drawable.ic_menu);
+        menuBtn.setScaleType(ImageView.ScaleType.CENTER);
+        menuBtn.setLayoutParams(new FrameLayout.LayoutParams(Helpers.getDp(GAME_MENU_BUTTON_LAYOUT_WIDTH), Helpers.getDp(GAME_MENU_BUTTON_LAYOUT_HEIGHT), Gravity.RIGHT | Gravity.TOP));
+        menuBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gameView.showMenu();
             }
+        });
+        menuBtn.setVisibility(View.GONE);
 
-            keyboardLayout.setGravity(Gravity.BOTTOM);
-            keyboardLayout.setPadding(0, 0, 0, Helpers.getDp(KeyboardController.PADDING));
-            keyboardLayout.setOnTouchListener(keyboardController);
-            keyboardLayout.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM));
+        menuLayout = new MenuLinearLayout(this);
+        menuLayout.setOrientation(LinearLayout.VERTICAL);
+        menuLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+        ));
 
-            hideKeyboardLayout();
+        portedTextView = new MenuTextView(this);
+        portedTextView.setTypeface(Global.robotoCondensedTypeface);
+        portedTextView.setTextSize(15);
+        portedTextView.setLineSpacing(0f, 1.2f);
+        portedTextView.setText(Html.fromHtml(getString(R.string.ported_text)));
+        portedTextView.setGravity(Gravity.CENTER);
+        portedTextView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM));
+        portedTextView.setPadding(0, 0, 0, Helpers.getDp(10));
 
-            menuBtn = new MenuImageView(this);
-            menuBtn.setImageResource(R.drawable.ic_menu);
-            menuBtn.setScaleType(ImageView.ScaleType.CENTER);
-            menuBtn.setLayoutParams(new FrameLayout.LayoutParams(Helpers.getDp(GAME_MENU_BUTTON_LAYOUT_WIDTH), Helpers.getDp(GAME_MENU_BUTTON_LAYOUT_HEIGHT), Gravity.RIGHT | Gravity.TOP));
-            menuBtn.setOnClickListener(new android.view.View.OnClickListener() {
-                @Override
-                public void onClick(android.view.View v) {
-                    gameView.showMenu();
-                }
-            });
-            menuBtn.setVisibility(android.view.View.GONE);
+        menuLayout.addView(titleLayout);
+        menuLayout.addView(scrollView);
 
-            menuLayout = new MenuLinearLayout(this);
-            menuLayout.setOrientation(LinearLayout.VERTICAL);
-            menuLayout.setLayoutParams(new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.MATCH_PARENT
-            ));
+        frame.addView(menuLayout);
+        frame.addView(keyboardLayout);
+        frame.addView(menuBtn);
+        frame.addView(portedTextView);
 
-            portedTextView = new MenuTextView(this);
-            portedTextView.setTypeface(Global.robotoCondensedTypeface);
-            portedTextView.setTextSize(15);
-            portedTextView.setLineSpacing(0f, 1.2f);
-            portedTextView.setText(Html.fromHtml(getString(R.string.ported_text)));
-            portedTextView.setGravity(Gravity.CENTER);
-            portedTextView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM));
-            portedTextView.setPadding(0, 0, 0, Helpers.getDp(10));
+        gameView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT, 1));
+        frame.addView(gameView, 0);
 
-            menuLayout.addView(titleLayout);
-            menuLayout.addView(scrollView);
+        setContentView(frame);
 
-            frame.addView(menuLayout);
-            frame.addView(keyboardLayout);
-            frame.addView(menuBtn);
-            frame.addView(portedTextView);
+        gameView._doIV(1); // flag for 1st image, as I understand..
+        thread = null;
+        m_caseZ = false;
+        m_nullI = 2;
+        m_forJ = 0;
+        m_byteJ = 0;
+        inited = false;
+        m_ifZ = false;
+        wasDestroyed = false;
+        restartingStarted = false;
 
-            gameView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT, 1));
-            frame.addView(gameView, 0);
-
-            setContentView(frame);
-
-            gameView._doIV(1); // flag for 1st image, as I understand..
-            thread = null;
-            m_caseZ = false;
-            m_nullI = 2;
-            m_forJ = 0;
-            m_byteJ = 0;
-            inited = false;
-            m_ifZ = false;
-            wasDestroyed = false;
-            restartingStarted = false;
-
-            frame.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-                @Override
-                public boolean onPreDraw() {
-                    frame.getViewTreeObserver().removeOnPreDrawListener(this);
-                    // setButtonsLayoutHeight();
-                    doStart();
-                    return true;
-                }
-            });
+        frame.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                frame.getViewTreeObserver().removeOnPreDrawListener(this);
+                // setButtonsLayoutHeight();
+                doStart();
+                return true;
+            }
+        });
 
 
 
@@ -382,7 +358,6 @@ public class GDActivity extends Activity implements Runnable {
 			}
 
 			wasStarted = true;*/
-        }
     }
 
     protected void doStart() {
@@ -411,46 +386,52 @@ public class GDActivity extends Activity implements Runnable {
             Helpers.logDebug("run(): initing");
             try {
                 // Game view
-				/* gameView = new GameView(shared);
-				gameView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT, 1));
-				frame.addView(gameView, 0); */
+/*
+                gameView = new GameView(shared);
+                gameView.setLayoutParams(new FrameLayout.LayoutParams(
+                        FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT, 1));
+                frame.addView(gameView, 0);
 
-				/* gameView._doIV(1);
-				thread = null;
-				m_caseZ = false;
-				m_nullI = 2;
-				m_forJ = 0L;
-				seconds = 0L;
-				m_byteJ = 0L;
-				inited = false;
-				m_ifZ = false; */
+                gameView._doIV(1);
+                thread = null;
+                m_caseZ = false;
+                m_nullI = 2;
+                m_forJ = 0L;
+                seconds = 0L;
+                m_byteJ = 0L;
+                inited = false;
+                m_ifZ = false;
+*/
 
                 long imageDelay = Global.DEBUG ? IMAGES_DELAY_DEBUG : IMAGES_DELAY; // delay of first image
                 Thread.yield();
 
-				/*gameView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-					@Override
-					public boolean onPreDraw() {
-						gameView.getViewTreeObserver().removeOnPreDrawListener(this);
-						viewDone = true;
-						logDebug("gameView is ready");
-						//doStart();
-						return true;
-					}
-				});
+/*
+                gameView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                    @Override
+                    public boolean onPreDraw() {
+                        gameView.getViewTreeObserver().removeOnPreDrawListener(this);
+                        viewDone = true;
+                        logDebug("gameView is ready");
+                        //doStart();
+                        return true;
+                    }
+                });
 
-				logDebug("before while..");
-				while (!viewDone) {
-					// Thread.sleep(1);
-				}
-				logDebug("after while..");*/
+                logDebug("before while..");
+                while (!viewDone) {
+                    // Thread.sleep(1);
+                }
+                logDebug("after while..");
+
 
                 // do we really need this?!
-				/*while (gameView == null || gameView.getParent() == null) {
+				while (gameView == null || gameView.getParent() == null) {
 					try {
 						Thread.sleep(100);
 					} catch (Exception x) {}
-				}*/
+				}
+*/
 
                 MenuHelmetView.clearStaticFields();
 
@@ -485,30 +466,32 @@ public class GDActivity extends Activity implements Runnable {
                 // menu = new Menu();
                 // menu.hideKeyboard();
 
-				/*menu.load(1);
-				menu.load(2);
-				menu.load(3);
+/*
+                menu.load(1);
+                menu.load(2);
+                menu.load(3);
 
-				Runnable createMenuRunnable = new Runnable() {
-					@Override
-					public void run() {
-						menu.load(4);
-						synchronized (this) {
-							notify();
-						}
-					}
-				};
+                Runnable createMenuRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        menu.load(4);
+                        synchronized (this) {
+                            notify();
+                        }
+                    }
+                };
 
-				synchronized (createMenuRunnable) {
-					// logDebug("before runOnUiThread()");
-					runOnUiThread(createMenuRunnable);
-					try {
-						// logDebug("before wait()");
-						createMenuRunnable.wait();
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}*/
+                synchronized (createMenuRunnable) {
+                    // logDebug("before runOnUiThread()");
+                    runOnUiThread(createMenuRunnable);
+                    try {
+                        // logDebug("before wait()");
+                        createMenuRunnable.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+*/
 
                 portedTextView.setVisibility(View.VISIBLE);
 
@@ -582,7 +565,7 @@ public class GDActivity extends Activity implements Runnable {
 				seconds += 20L; */
                 if (m_forJ == 0L)
                     m_forJ = System.currentTimeMillis();
-                int k = 0;
+                int k;
                 if (/*physEngine != null && */(k = physEngine._dovI()) == 3 && m_byteJ == 0L) {
                     m_byteJ = System.currentTimeMillis() + 3000L;
                     gameView.showInfoMessage(getString(R.string.crashed), 3000);
@@ -701,7 +684,7 @@ public class GDActivity extends Activity implements Runnable {
         // menu.helmetRotationStop();
         // Menu.HelmetRotation.stop();
         // if (menu != null)
-        // 	menu.saveAll();
+        // menu.saveAll();
         // levelsManager.updateLevelSettings();
     }
 
@@ -767,15 +750,12 @@ public class GDActivity extends Activity implements Runnable {
 
     // @UiThread
     public void setMenu(final LinearLayout layout) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                scrollView.removeAllViews();
-                if (layout.getParent() != null) {
-                    ((ViewManager) layout.getParent()).removeView(layout);
-                }
-                scrollView.addView(layout);
+        runOnUiThread(() -> {
+            scrollView.removeAllViews();
+            if (layout.getParent() != null) {
+                ((ViewManager) layout.getParent()).removeView(layout);
             }
+            scrollView.addView(layout);
         });
     }
 
@@ -789,7 +769,8 @@ public class GDActivity extends Activity implements Runnable {
             gameView.showInfoMessage(getString(R.string.wheelie), 1000);
         else
             gameView.showInfoMessage(getString(R.string.finished1), 1000);
-        for (long l2 = System.currentTimeMillis() + 1000L; l2 > System.currentTimeMillis(); gameView.postInvalidate()) {
+        for (long l2 = System.currentTimeMillis() + 1000L; l2 > System.currentTimeMillis();
+             gameView.postInvalidate()) {
             if (menuShown) {
                 //m_di.postInvalidate();
                 return;
@@ -836,7 +817,8 @@ public class GDActivity extends Activity implements Runnable {
         pausedTime = 0;
         m_byteJ = 0;
         if (flag)
-            gameView.showInfoMessage(levelLoader.getLevelName(menu.getSelectedLevel(), menu.getSelectedTrack()), 3000);
+            gameView.showInfoMessage(levelLoader.getLevelName(
+                    menu.getSelectedLevel(), menu.getSelectedTrack()), 3000);
         // logDebug("[GDActivity] restart(): 2");
         gameView._casevV();
         // logDebug("[GDActivity] restart(): 3");
@@ -852,23 +834,20 @@ public class GDActivity extends Activity implements Runnable {
 
         final GDActivity self = this;
 
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Helpers.logDebug("[GDActivity " + self.hashCode() + "] destroyApp()");
-                inited = false;
-                m_caseZ = true;
+        runOnUiThread(() -> {
+            Helpers.logDebug("[GDActivity " + self.hashCode() + "] destroyApp()");
+            inited = false;
+            m_caseZ = true;
 
-                synchronized (gameView) {
-                    destroyResources();
+            synchronized (gameView) {
+                destroyResources();
 
-                    if (exiting || restart) {
-                        finish();
-                    }
+                if (exiting || restart) {
+                    finish();
+                }
 
-                    if (restart) {
-                        doRestartApp();
-                    }
+                if (restart) {
+                    doRestartApp();
                 }
             }
         });
@@ -895,29 +874,23 @@ public class GDActivity extends Activity implements Runnable {
 
     // @UiThread
     public void hideKeyboardLayout() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                keyboardLayout.setVisibility(android.view.View.GONE);
+        runOnUiThread(() -> {
+            keyboardLayout.setVisibility(View.GONE);
 
-                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) scrollView.getLayoutParams();
-                params.setMargins(0, 0, 0, 0);
-                scrollView.setLayoutParams(params);
-            }
+            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) scrollView.getLayoutParams();
+            params.setMargins(0, 0, 0, 0);
+            scrollView.setLayoutParams(params);
         });
     }
 
     // @UiThread
     public void showKeyboardLayout() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                keyboardLayout.setVisibility(android.view.View.VISIBLE);
+        runOnUiThread(() -> {
+            keyboardLayout.setVisibility(View.VISIBLE);
 
-                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) scrollView.getLayoutParams();
-                params.setMargins(0, 0, 0, Helpers.getDp(getButtonsLayoutHeight()));
-                scrollView.setLayoutParams(params);
-            }
+            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) scrollView.getLayoutParams();
+            params.setMargins(0, 0, 0, Helpers.getDp(getButtonsLayoutHeight()));
+            scrollView.setLayoutParams(params);
         });
     }
 
@@ -962,13 +935,10 @@ public class GDActivity extends Activity implements Runnable {
 
     // @UiThread
     protected void gameToMenuUpdateUi() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                menuBtn.setVisibility(android.view.View.GONE);
-                menuTitleTextView.setVisibility(android.view.View.VISIBLE);
-                scrollView.setVisibility(android.view.View.VISIBLE);
-            }
+        runOnUiThread(() -> {
+            menuBtn.setVisibility(View.GONE);
+            menuTitleTextView.setVisibility(View.VISIBLE);
+            scrollView.setVisibility(View.VISIBLE);
         });
     }
 
@@ -995,39 +965,30 @@ public class GDActivity extends Activity implements Runnable {
 
     // @UiThread
     protected void menuToGameUpdateUi() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                menuBtn.setVisibility(android.view.View.VISIBLE);
-                menuTitleTextView.setVisibility(android.view.View.GONE);
-                scrollView.setVisibility(android.view.View.GONE);
+        runOnUiThread(() -> {
+            menuBtn.setVisibility(View.VISIBLE);
+            menuTitleTextView.setVisibility(View.GONE);
+            scrollView.setVisibility(View.GONE);
 
-                // Clear menu
-                scrollView.removeAllViews();
-                menuTitleTextView.setText("");
-                menu.menuDisabled = true;
-                // menu.currentMenu = null;
-            }
+            // Clear menu
+            scrollView.removeAllViews();
+            menuTitleTextView.setText("");
+            menu.menuDisabled = true;
+            // menu.currentMenu = null;
         });
     }
 
     public void scrollTextMenuUp() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                int y = scrollView.getScrollY();
-                scrollView.scrollTo(0, y - Helpers.getDp(20));
-            }
+        runOnUiThread(() -> {
+            int y = scrollView.getScrollY();
+            scrollView.scrollTo(0, y - Helpers.getDp(20));
         });
     }
 
     public void scrollTextMenuDown() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                int y = scrollView.getScrollY();
-                scrollView.scrollTo(0, y + Helpers.getDp(20));
-            }
+        runOnUiThread(() -> {
+            int y = scrollView.getScrollY();
+            scrollView.scrollTo(0, y + Helpers.getDp(20));
         });
     }
 
@@ -1035,38 +996,35 @@ public class GDActivity extends Activity implements Runnable {
         final GDActivity gd = Helpers.getGDActivity();
         final ObservableScrollView scrollView = gd.scrollView;
 
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Rect scrollBounds = new Rect();
-                scrollView.getHitRect(scrollBounds);
+        runOnUiThread(() -> {
+            Rect scrollBounds = new Rect();
+            scrollView.getHitRect(scrollBounds);
 
-                if (!view.getLocalVisibleRect(scrollBounds)
-                        || scrollBounds.height() < view.getHeight()) {
-                    int top = view.getTop(),
-                            height = view.getHeight(),
-                            scrollY = scrollView.getScrollY(),
-                            scrollHeight = scrollView.getHeight(),
-                            y = top;
+            if (!view.getLocalVisibleRect(scrollBounds)
+                    || scrollBounds.height() < view.getHeight()) {
+                int top = view.getTop(),
+                        height = view.getHeight(),
+                        scrollY = scrollView.getScrollY(),
+                        scrollHeight = scrollView.getHeight(),
+                        y = top;
 
-					/*logDebug("top = " + top);
-					logDebug("height = " + height);
-					logDebug("scrollY = " + scrollY);
-					logDebug("scrollHeight = " + scrollHeight);*/
+                /*logDebug("top = " + top);
+                logDebug("height = " + height);
+                logDebug("scrollY = " + scrollY);
+                logDebug("scrollHeight = " + scrollHeight);*/
 
-                    if (top < scrollY) {
-                        // scroll to y
-                    } else if (top + height > scrollY + scrollHeight) {
-                        y = top + height - scrollHeight;
-                        if (y < 0)
-                            y = 0;
-                    }
-
-                    // logDebug("View is not visible, scroll to y = " + y);
-                    scrollView.scrollTo(0, y);
-                } else {
-                    // logDebug("View is visible");
+                if (top < scrollY) {
+                    // scroll to y
+                } else if (top + height > scrollY + scrollHeight) {
+                    y = top + height - scrollHeight;
+                    if (y < 0)
+                        y = 0;
                 }
+
+                // logDebug("View is not visible, scroll to y = " + y);
+                scrollView.scrollTo(0, y);
+            } else {
+                // logDebug("View is visible");
             }
         });
     }
@@ -1094,7 +1052,8 @@ public class GDActivity extends Activity implements Runnable {
     private void doRestartApp() {
         Intent mStartActivity = new Intent(this, GDActivity.class);
         int mPendingIntentId = 123456;
-        PendingIntent mPendingIntent = PendingIntent.getActivity(this, mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent mPendingIntent = PendingIntent.getActivity(
+                this, mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager mgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
     }
@@ -1149,7 +1108,8 @@ public class GDActivity extends Activity implements Runnable {
     }
 
     public void sendKeyboardLogs() {
-        final ProgressDialog progressDialog = ProgressDialog.show(this, getString(R.string.please_wait), getString(R.string.please_wait), true);
+        final ProgressDialog progressDialog = ProgressDialog.show(
+                this, getString(R.string.please_wait), getString(R.string.please_wait), true);
         API.sendKeyboardLogs(keyboardController.getLog(), new ResponseHandler() {
             @Override
             public void onResponse(Response response) {
@@ -1177,12 +1137,7 @@ public class GDActivity extends Activity implements Runnable {
         }
 
         public boolean in(float x, float y) {
-            if (x < this.x || x > this.x + this.w || y < this.y || y > this.y + this.h) {
-                return false;
-            }
-            return true;
+            return !(x < this.x) && !(x > this.x + this.w) && !(y < this.y) && !(y > this.y + this.h);
         }
-
     }
-
 }

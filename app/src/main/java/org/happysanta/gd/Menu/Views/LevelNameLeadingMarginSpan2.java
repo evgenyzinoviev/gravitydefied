@@ -34,5 +34,4 @@ public class LevelNameLeadingMarginSpan2 implements LeadingMarginSpan.LeadingMar
     public int getLeadingMarginLineCount() {
         return lines;
     }
-
 }

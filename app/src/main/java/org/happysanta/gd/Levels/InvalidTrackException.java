@@ -8,5 +8,4 @@ public class InvalidTrackException extends Exception {
     public InvalidTrackException(Exception e) {
         super(e);
     }
-
 }

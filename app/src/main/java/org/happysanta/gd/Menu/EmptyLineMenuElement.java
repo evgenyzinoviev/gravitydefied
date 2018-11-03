@@ -39,5 +39,4 @@ public class EmptyLineMenuElement implements MenuElement {
     @Override
     public void performAction(int k) {
     }
-
 }

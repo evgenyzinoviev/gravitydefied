@@ -21,5 +21,4 @@ public class Response {
     public JSONArray getJSON() {
         return jsonArray;
     }
-
 }

@@ -170,7 +170,7 @@ public class Loader {
             levels = l1;
             int j = levels.pointsCount;
             if (m_saaI == null || m_daI < j) {
-                m_saaI = (int[][]) null;
+                m_saaI = null;
                 // System.gc();
                 m_daI = j >= 100 ? j : 100;
                 m_saaI = new int[m_daI][2];
@@ -287,12 +287,14 @@ public class Loader {
             } else {
                 byte0 = 2;
             }
-            if (byte0 == 0 && (int) ((long) m_saaI[l4][0] * (long) n1.m_eI >> 16) + (int) ((long) m_saaI[l4][1] * (long) n1.m_dI >> 16) < 0) {
+            if (byte0 == 0 && (int) ((long) m_saaI[l4][0] * (long) n1.m_eI >> 16) +
+                    (int) ((long) m_saaI[l4][1] * (long) n1.m_dI >> 16) < 0) {
                 m_eI = m_saaI[l4][0];
                 m_dI = m_saaI[l4][1];
                 return 0;
             }
-            if (byte0 != 1 || (int) ((long) m_saaI[l4][0] * (long) n1.m_eI >> 16) + (int) ((long) m_saaI[l4][1] * (long) n1.m_dI >> 16) >= 0)
+            if (byte0 != 1 || (int) ((long) m_saaI[l4][0] * (long) n1.m_eI >> 16) +
+                    (int) ((long) m_saaI[l4][1] * (long) n1.m_dI >> 16) >= 0)
                 continue;
             k3++;
             byte1 = 1;
@@ -329,5 +331,4 @@ public class Loader {
     public void setShadowsEnabled(boolean enabled) {
         shadowsEnabled = enabled;
     }
-
 }

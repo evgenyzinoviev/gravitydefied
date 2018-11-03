@@ -77,5 +77,4 @@ public class TextMenuElement
     @Override
     public void performAction(int k) {
     }
-
 }

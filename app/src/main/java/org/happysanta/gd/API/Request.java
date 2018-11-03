@@ -82,10 +82,7 @@ public class Request {
 
         // handler.onResponse(response);
 
-        if (response != null)
-            handler.onResponse(response);
-        else
-            handler.onError(new APIException("JSON parsing error"));
+        handler.onResponse(response);
     }
 
     protected class AsyncRequestTask extends AsyncTask<String, Void, String> {
@@ -102,7 +99,7 @@ public class Request {
                 e.printStackTrace();
                 return null;
             }
-            String result = null;
+            String result;
             InputStream is = null;
 
             try {
@@ -116,7 +113,7 @@ public class Request {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     if (isCancelled()) break;
-                    sb.append(line + "\n");
+                    sb.append(line).append("\n");
                 }
                 result = sb.toString();
             } catch (java.lang.Exception e) {
@@ -138,7 +135,5 @@ public class Request {
         public void onPostExecute(String result) {
             onDone(result);
         }
-
     }
-
 }

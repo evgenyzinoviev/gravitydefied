@@ -69,7 +69,9 @@ public class ActionMenuElement
         lockImage.setScaleType(ImageView.ScaleType.CENTER);
         lockImage.setVisibility(View.GONE);
 
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
         lp.setMargins(0, 0, getDp(ActionMenuElement.LOCK_IMAGE_MARGIN_RIGHT), 0);
         lockImage.setLayoutParams(lp);
 
@@ -138,5 +140,4 @@ public class ActionMenuElement
             ((MenuTextView) textView).setTextColor(defaultColorStateList());
         }
     }
-
 }

@@ -22,47 +22,26 @@ public class MenuLinearLayout extends LinearLayout {
 
     @Override
     public void removeAllViews() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                MenuLinearLayout.super.removeAllViews();
-            }
-        });
+        runOnUiThread(MenuLinearLayout.super::removeAllViews);
     }
 
     @Override
     public void setVisibility(final int visibility) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                MenuLinearLayout.super.setVisibility(visibility);
-            }
-        });
+        runOnUiThread(() -> MenuLinearLayout.super.setVisibility(visibility));
     }
 
     @Override
     public void addView(final View view) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                MenuLinearLayout.super.addView(view);
-            }
-        });
+        runOnUiThread(() -> MenuLinearLayout.super.addView(view));
     }
 
     @Override
     public void setPadding(final int left, final int top, final int right, final int bottom) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                MenuLinearLayout.super.setPadding(left, top, right, bottom);
-            }
-        });
+        runOnUiThread(() -> MenuLinearLayout.super.setPadding(left, top, right, bottom));
     }
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent evt) {
         return interceptTouchEvents;
     }
-
 }

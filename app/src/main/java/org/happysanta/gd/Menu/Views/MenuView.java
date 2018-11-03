@@ -9,5 +9,4 @@ public class MenuView extends View {
     public MenuView(GDActivity activity) {
         super(activity);
     }
-
 }

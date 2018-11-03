@@ -3,7 +3,7 @@ package org.happysanta.gd.API;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
-import java.io.*;
+import java.io.FileOutputStream;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,8 +16,7 @@ public class API {
     public static final String MRG_URL = "http://gdtr.net/mrg/%d.mrg";
     public static final int VERSION = 2;
 
-    public static Request getLevels(int offset, int limit, LevelsSortType sort, ResponseHandler handler)
-            throws Exception {
+    public static Request getLevels(int offset, int limit, LevelsSortType sort, ResponseHandler handler) {
         List<NameValuePair> params = new LinkedList<NameValuePair>();
         params.add(new BasicNameValuePair("sort", sort.toString()));
         params.add(new BasicNameValuePair("offset", String.valueOf(offset)));
@@ -27,13 +26,13 @@ public class API {
     }
 
     public static Request getNotifications(boolean installedFromAPK, ResponseHandler handler) {
-        List<NameValuePair> params = new LinkedList<NameValuePair>();
+        List<NameValuePair> params = new LinkedList<>();
         params.add(new BasicNameValuePair("apk", String.valueOf(installedFromAPK ? 1 : 0)));
         return new Request("getNotifications", params, handler);
     }
 
     public static Request sendStats(String statsJSON, String installationID, int useCheats, ResponseHandler handler) {
-        List<NameValuePair> params = new LinkedList<NameValuePair>();
+        List<NameValuePair> params = new LinkedList<>();
         params.add(new BasicNameValuePair("stats", statsJSON));
         params.add(new BasicNameValuePair("id", installationID));
         params.add(new BasicNameValuePair("use_cheats", String.valueOf(useCheats)));
@@ -41,7 +40,7 @@ public class API {
     }
 
     public static Request sendKeyboardLogs(String log, ResponseHandler handler) {
-        List<NameValuePair> params = new LinkedList<NameValuePair>();
+        List<NameValuePair> params = new LinkedList<>();
         params.add(new BasicNameValuePair("log", log));
         params.add(new BasicNameValuePair("device", getDeviceName()));
         return new Request("sendKeyboardLogs", params, handler, true);
@@ -55,12 +54,12 @@ public class API {
         return String.format(MRG_URL, id);
     }
 
-    public static enum LevelsSortType {
+    public enum LevelsSortType {
         POPULAR("popular"), TRACKS("tracks"), RECENT("recent"), OLDEST("oldest");
 
         private final String text;
 
-        private LevelsSortType(final String text) {
+        LevelsSortType(final String text) {
             this.text = text;
         }
 
@@ -97,5 +96,4 @@ public class API {
         }
         return 0;
     }
-
 }

@@ -49,7 +49,9 @@ public class HighScoreTextMenuElement
 
         layout = new MenuLinearLayout(context);
         layout.setOrientation(LinearLayout.HORIZONTAL);
-        layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        layout.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
 
         image = new MenuImageView(context);
         image.setScaleType(ImageView.ScaleType.CENTER);
@@ -62,11 +64,15 @@ public class HighScoreTextMenuElement
             defaultTypeface = textView.getTypeface();
         }
 
-        LinearLayout.LayoutParams textViewLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams textViewLayoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
         // textViewLayoutParams.setMargins(getDp(TEXT_LEFT_MARGIN), 0, 0, 0);
         textView.setLayoutParams(textViewLayoutParams);
 
-        layout.addView(image, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        layout.addView(image, new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.MATCH_PARENT));
         layout.addView(textView);
     }
 
@@ -91,12 +97,12 @@ public class HighScoreTextMenuElement
         textView.setTypeface(is ? Global.robotoCondensedTypeface : defaultTypeface);
 
         LinearLayout.LayoutParams textViewLayoutParams = (LinearLayout.LayoutParams) textView.getLayoutParams();
-        textViewLayoutParams.setMargins(!is && showMedal ? getDp(TEXT_LEFT_MARGIN) : 0, 0, 0, is ? getDp(SUBTITLE_MARGIN_BOTTOM) : 0);
+        textViewLayoutParams.setMargins(!is && showMedal ? getDp(TEXT_LEFT_MARGIN) :
+                0, 0, 0, is ? getDp(SUBTITLE_MARGIN_BOTTOM) : 0);
         textView.setLayoutParams(textViewLayoutParams);
     }
 
     public void setLayoutPadding(boolean use) {
         layout.setPadding(0, use ? getDp(LAYOUT_PADDING) : 0, 0, use ? getDp(LAYOUT_PADDING) : 0);
     }
-
 }

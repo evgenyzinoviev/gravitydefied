@@ -58,8 +58,10 @@ public class NameInputMenuScreen extends MenuScreen {
             cursorLayout.addView(cursorTextViews[i]);
         }
 
-        layout.addView(nameLayout, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        layout.addView(cursorLayout, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        layout.addView(nameLayout, new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        layout.addView(cursorLayout, new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
         updateText();
         updateCursorPosition();
@@ -172,5 +174,4 @@ public class NameInputMenuScreen extends MenuScreen {
         cursorPosition = 0;
         updateCursorPosition();
     }
-
 }

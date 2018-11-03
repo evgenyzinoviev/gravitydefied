@@ -98,7 +98,5 @@ public class InstalledLevelsMenuScreen extends LevelsMenuScreen {
         protected Level[] doInBackground(Void... params) {
             return levelsManager.getAllInstalledLevels();
         }
-
     }
-
 }

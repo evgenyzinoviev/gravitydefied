@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +20,7 @@ public class LevelsDataSource {
         dbHelper = new LevelsSQLiteOpenHelper(context);
     }
 
-    public synchronized void open() throws SQLException {
+    public synchronized void open() {
         db = dbHelper.getWritableDatabase();
     }
 
@@ -29,7 +28,9 @@ public class LevelsDataSource {
         dbHelper.close();
     }
 
-    public synchronized Level createLevel(String name, String author, int countEasy, int countMedium, int countHard, long addedTs, long installedTs, boolean isDefault, long apiId) {
+    public synchronized Level createLevel(String name, String author, int countEasy,
+                                          int countMedium, int countHard, long addedTs,
+                                          long installedTs, boolean isDefault, long apiId) {
         ContentValues values = new ContentValues();
         values.put(LevelsSQLiteOpenHelper.LEVELS_COLUMN_NAME, name);
         values.put(LevelsSQLiteOpenHelper.LEVELS_COLUMN_AUTHOR, author);
@@ -63,8 +64,10 @@ public class LevelsDataSource {
 
     public synchronized void deleteLevel(Level level) {
         long id = level.getId();
-        db.delete(LevelsSQLiteOpenHelper.TABLE_LEVELS, LevelsSQLiteOpenHelper.LEVELS_COLUMN_ID + " = " + id, null);
-        db.delete(LevelsSQLiteOpenHelper.TABLE_HIGHSCORES, LevelsSQLiteOpenHelper.HIGHSCORES_COLUMN_LEVEL_ID + " = " + id, null);
+        db.delete(LevelsSQLiteOpenHelper.TABLE_LEVELS, LevelsSQLiteOpenHelper.LEVELS_COLUMN_ID +
+                " = " + id, null);
+        db.delete(LevelsSQLiteOpenHelper.TABLE_HIGHSCORES,
+                LevelsSQLiteOpenHelper.HIGHSCORES_COLUMN_LEVEL_ID + " = " + id, null);
     }
 
     // This will also reset auto increment counter
@@ -101,7 +104,8 @@ public class LevelsDataSource {
 
         // logDebug("LevelsDataSource.updateLevel selectedLeague: " + level.getSelectedLeague());
 
-        db.update(LevelsSQLiteOpenHelper.TABLE_LEVELS, values, LevelsSQLiteOpenHelper.LEVELS_COLUMN_ID + " = " + level.getId(), null);
+        db.update(LevelsSQLiteOpenHelper.TABLE_LEVELS, values,
+                LevelsSQLiteOpenHelper.LEVELS_COLUMN_ID + " = " + level.getId(), null);
     }
 
     public synchronized HashMap<Long, Long> findInstalledLevels(ArrayList<Long> apiIds) {
@@ -112,7 +116,11 @@ public class LevelsDataSource {
             apiIdsArray[i] = apiIds.get(i).toString();
         }
 
-        Cursor cursor = db.rawQuery("SELECT " + LevelsSQLiteOpenHelper.LEVELS_COLUMN_API_ID + ", " + LevelsSQLiteOpenHelper.LEVELS_COLUMN_ID + " FROM " + LevelsSQLiteOpenHelper.TABLE_LEVELS + " WHERE " + LevelsSQLiteOpenHelper.LEVELS_COLUMN_API_ID + " IN (" + makePlaceholders(apiIdsArray.length) + ")", apiIdsArray);
+        Cursor cursor = db.rawQuery("SELECT " + LevelsSQLiteOpenHelper.LEVELS_COLUMN_API_ID +
+                ", " + LevelsSQLiteOpenHelper.LEVELS_COLUMN_ID + " FROM " +
+                LevelsSQLiteOpenHelper.TABLE_LEVELS + " WHERE " +
+                LevelsSQLiteOpenHelper.LEVELS_COLUMN_API_ID +
+                " IN (" + makePlaceholders(apiIdsArray.length) + ")", apiIdsArray);
         cursor.moveToFirst();
 
         while (!cursor.isAfterLast()) {
@@ -127,7 +135,8 @@ public class LevelsDataSource {
     }
 
     public synchronized List<Level> getAllLevels() {
-        Cursor cursor = db.query(LevelsSQLiteOpenHelper.TABLE_LEVELS, null, null, null, null, null, null);
+        Cursor cursor = db.query(LevelsSQLiteOpenHelper.TABLE_LEVELS, null,
+                null, null, null, null, null);
 
         List<Level> levels = levelsFromCursor(cursor);
         cursor.close();
@@ -136,7 +145,9 @@ public class LevelsDataSource {
     }
 
     public synchronized List<Level> getLevels(int offset, int count) {
-        Cursor cursor = db.query(LevelsSQLiteOpenHelper.TABLE_LEVELS, null, null, null, null, LevelsSQLiteOpenHelper.LEVELS_COLUMN_ID + " ASC", offset + ", " + count);
+        Cursor cursor = db.query(LevelsSQLiteOpenHelper.TABLE_LEVELS, null, null,
+                null, null, LevelsSQLiteOpenHelper.LEVELS_COLUMN_ID +
+                        " ASC", offset + ", " + count);
 
         List<Level> levels = levelsFromCursor(cursor);
         cursor.close();
@@ -145,7 +156,9 @@ public class LevelsDataSource {
     }
 
     public synchronized Level getLevel(long id) {
-        Cursor cursor = db.query(LevelsSQLiteOpenHelper.TABLE_LEVELS, null, LevelsSQLiteOpenHelper.LEVELS_COLUMN_ID + " = " + id, null, null, null, null);
+        Cursor cursor = db.query(LevelsSQLiteOpenHelper.TABLE_LEVELS, null,
+                LevelsSQLiteOpenHelper.LEVELS_COLUMN_ID + " = " + id, null,
+                null, null, null);
         cursor.moveToFirst();
 
         Level level = null;
@@ -169,14 +182,20 @@ public class LevelsDataSource {
     }
 
     public synchronized boolean isDefaultLevelCreated() {
-        Cursor cursor = db.query(LevelsSQLiteOpenHelper.TABLE_LEVELS, new String[]{LevelsSQLiteOpenHelper.LEVELS_COLUMN_ID}, LevelsSQLiteOpenHelper.LEVELS_COLUMN_IS_DEFAULT + " = 1", null, null, null, null);
+        Cursor cursor = db.query(LevelsSQLiteOpenHelper.TABLE_LEVELS,
+                new String[]{LevelsSQLiteOpenHelper.LEVELS_COLUMN_ID},
+                LevelsSQLiteOpenHelper.LEVELS_COLUMN_IS_DEFAULT +
+                        " = 1", null, null, null, null);
         boolean created = cursor.getCount() > 0;
         cursor.close();
         return created;
     }
 
     public synchronized boolean isApiIdInstalled(long apiId) {
-        Cursor cursor = db.query(LevelsSQLiteOpenHelper.TABLE_LEVELS, new String[]{LevelsSQLiteOpenHelper.LEVELS_COLUMN_ID}, LevelsSQLiteOpenHelper.LEVELS_COLUMN_API_ID + " = " + apiId, null, null, null, null);
+        Cursor cursor = db.query(LevelsSQLiteOpenHelper.TABLE_LEVELS,
+                new String[]{LevelsSQLiteOpenHelper.LEVELS_COLUMN_ID},
+                LevelsSQLiteOpenHelper.LEVELS_COLUMN_API_ID + " = "
+                        + apiId, null, null, null, null);
         boolean installed = cursor.getCount() > 0;
         cursor.close();
         return installed;
@@ -184,7 +203,9 @@ public class LevelsDataSource {
 
     public synchronized HighScores getHighScores(long levelId, int level, int track) {
         Cursor cursor = db.query(LevelsSQLiteOpenHelper.TABLE_HIGHSCORES, null,
-                LevelsSQLiteOpenHelper.HIGHSCORES_COLUMN_LEVEL_ID + " = " + levelId + " AND " + LevelsSQLiteOpenHelper.HIGHSCORES_COLUMN_LEVEL + " = " + level + " AND " + LevelsSQLiteOpenHelper.HIGHSCORES_COLUMN_TRACK + " = " + track,
+                LevelsSQLiteOpenHelper.HIGHSCORES_COLUMN_LEVEL_ID + " = " + levelId +
+                        " AND " + LevelsSQLiteOpenHelper.HIGHSCORES_COLUMN_LEVEL + " = " + level +
+                        " AND " + LevelsSQLiteOpenHelper.HIGHSCORES_COLUMN_TRACK + " = " + track,
                 null, null, null, null);
         cursor.moveToFirst();
 
@@ -215,20 +236,22 @@ public class LevelsDataSource {
             }
         }
 
-        long insertId = db.insert(LevelsSQLiteOpenHelper.TABLE_HIGHSCORES, null, values);
-        return insertId;
+        return db.insert(LevelsSQLiteOpenHelper.TABLE_HIGHSCORES, null, values);
     }
 
     public synchronized void updateHighScores(HighScores scores) {
         ContentValues values = new ContentValues();
         for (int league = 0; league < 4; league++) {
             for (int place = 0; place < 3; place++) {
-                values.put(LevelsSQLiteOpenHelper.getHighscoresTimeColumn(league, place), scores.getTime(league, place));
-                values.put(LevelsSQLiteOpenHelper.getHighscoresNameColumn(league, place), scores.getName(league, place));
+                values.put(LevelsSQLiteOpenHelper.getHighscoresTimeColumn(league, place),
+                        scores.getTime(league, place));
+                values.put(LevelsSQLiteOpenHelper.getHighscoresNameColumn(league, place),
+                        scores.getName(league, place));
             }
         }
 
-        db.update(LevelsSQLiteOpenHelper.TABLE_HIGHSCORES, values, LevelsSQLiteOpenHelper.HIGHSCORES_COLUMN_ID + " = " + scores.getId(), null);
+        db.update(LevelsSQLiteOpenHelper.TABLE_HIGHSCORES, values,
+                LevelsSQLiteOpenHelper.HIGHSCORES_COLUMN_ID + " = " + scores.getId(), null);
     }
 
     public synchronized void clearHighScores(long levelId) {
@@ -271,8 +294,10 @@ public class LevelsDataSource {
 
         for (int league = 0; league < 4; league++) {
             for (int place = 0; place < 3; place++) {
-                highScores.setTime(league, place, cursor.getLong(cursor.getColumnIndex(LevelsSQLiteOpenHelper.getHighscoresTimeColumn(league, place))));
-                highScores.setName(league, place, cursor.getString(cursor.getColumnIndex(LevelsSQLiteOpenHelper.getHighscoresNameColumn(league, place))));
+                highScores.setTime(league, place, cursor.getLong(cursor.getColumnIndex(
+                        LevelsSQLiteOpenHelper.getHighscoresTimeColumn(league, place))));
+                highScores.setName(league, place, cursor.getString(cursor.getColumnIndex(
+                        LevelsSQLiteOpenHelper.getHighscoresNameColumn(league, place))));
             }
         }
     }
@@ -289,5 +314,4 @@ public class LevelsDataSource {
             return sb.toString();
         }
     }
-
 }

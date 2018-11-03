@@ -114,12 +114,13 @@ public class LevelsSQLiteOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
     }
 
     private void createLevelsIndexes(SQLiteDatabase db) {
-        db.execSQL("CREATE INDEX " + LEVELS_COLUMN_API_ID + "_index ON " + TABLE_LEVELS + "(" + LEVELS_COLUMN_API_ID + ")");
-        db.execSQL("CREATE INDEX " + LEVELS_COLUMN_IS_DEFAULT + "_index ON " + TABLE_LEVELS + "(" + LEVELS_COLUMN_IS_DEFAULT + ")");
+        db.execSQL("CREATE INDEX " + LEVELS_COLUMN_API_ID + "_index ON " +
+                TABLE_LEVELS + "(" + LEVELS_COLUMN_API_ID + ")");
+        db.execSQL("CREATE INDEX " + LEVELS_COLUMN_IS_DEFAULT + "_index ON " +
+                TABLE_LEVELS + "(" + LEVELS_COLUMN_IS_DEFAULT + ")");
     }
 
     private void createHighscoresIndexes(SQLiteDatabase db) {
@@ -137,5 +138,4 @@ public class LevelsSQLiteOpenHelper extends SQLiteOpenHelper {
     public static String getHighscoresNameColumn(int league, int place) {
         return "l" + league + "_p" + place + "_name";
     }
-
 }

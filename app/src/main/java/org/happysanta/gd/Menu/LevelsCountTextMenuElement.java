@@ -49,7 +49,8 @@ public class LevelsCountTextMenuElement
         tracksImages = new MenuImageView[3];
         for (int i = 0; i < 3; i++) {
             tracksImages[i] = new MenuImageView(context);
-            tracksImages[i].setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            tracksImages[i].setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT));
         }
 
         tracksImages[0].setImageResource(R.drawable.levels_wheel0);
@@ -66,7 +67,8 @@ public class LevelsCountTextMenuElement
             tracksTexts[i].setPadding(getDp(PADDING_LEFT), 0, getDp(PADDING_RIGHT), 0);
         }
 
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         params.setMargins(0, 0, getDp(MARGIN_RIGHT), 0);
 
         textView.setLayoutParams(params);

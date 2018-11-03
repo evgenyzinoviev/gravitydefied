@@ -32,42 +32,21 @@ public class MenuTextView extends TextView {
     }
 
     public void setTextOnUiThread(final CharSequence sequence) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                MenuTextView.super.setText(sequence);
-            }
-        });
+        runOnUiThread(() -> MenuTextView.super.setText(sequence));
     }
 
     @Override
     public void setTextSize(final float size) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                MenuTextView.super.setTextSize(size);
-            }
-        });
+        runOnUiThread(() -> MenuTextView.super.setTextSize(size));
     }
 
     @Override
     public void setTypeface(final Typeface typeface) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                MenuTextView.super.setTypeface(typeface);
-            }
-        });
+        runOnUiThread(() -> MenuTextView.super.setTypeface(typeface));
     }
 
     @Override
     public void setVisibility(final int visibility) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                MenuTextView.super.setVisibility(visibility);
-            }
-        });
+        runOnUiThread(() -> MenuTextView.super.setVisibility(visibility));
     }
-
 }

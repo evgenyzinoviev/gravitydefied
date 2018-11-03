@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import org.happysanta.gd.Callback;
 import org.happysanta.gd.GDActivity;
 import org.happysanta.gd.Global;
 import org.happysanta.gd.Menu.Views.LevelNameLeadingMarginSpan2;
@@ -170,7 +169,7 @@ public class LevelMenuElement
             if (installedIcon.getParent() != nameLayout) {
                 nameLayout.addView(installedIcon);
             }
-        } else if (!installed && installedIcon != null && installedIcon.getParent() == nameLayout) {
+        } else if (installedIcon != null && installedIcon.getParent() == nameLayout) {
             nameLayout.removeView(installedIcon);
         }
 
@@ -196,7 +195,7 @@ public class LevelMenuElement
             if (activeIcon.getParent() != nameLayout) {
                 nameLayout.addView(activeIcon);
             }
-        } else if (!active && activeIcon != null && activeIcon.getParent() == nameLayout) {
+        } else if (activeIcon != null && activeIcon.getParent() == nameLayout) {
             nameLayout.removeView(activeIcon);
         }
 
@@ -234,7 +233,9 @@ public class LevelMenuElement
             screen.addItem(new BigTextMenuElement(Html.fromHtml(String.format(getString(R.string.installed_tpl), level.getFullInstalledDate()))));
         else if (level.getAddedTs() > 0)
             screen.addItem(new BigTextMenuElement(Html.fromHtml(String.format(getString(R.string.added_tpl), level.getFullAddedDate()))));
-        screen.addItem(new BigTextMenuElement(Html.fromHtml(String.format(getString(R.string.tracks_tpl), level.getCountEasy() + " / " + level.getCountMedium() + " / " + level.getCountHard()))));
+        screen.addItem(new BigTextMenuElement(Html.fromHtml(String.format(
+                getString(R.string.tracks_tpl), level.getCountEasy() + " / " +
+                        level.getCountMedium() + " / " + level.getCountHard()))));
         screen.addItem(menu.createEmptyLine(true));
 
         if (!level.isInstalled()) {
@@ -299,59 +300,47 @@ public class LevelMenuElement
                     if (!level.isInstalled())
                         break;
 
-                    showConfirm(
-                            getString(R.string.delete_levels),
-                            getString(R.string.delete_levels_confirmation),
-                            new Runnable() {
-                                @Override
-                                public void run() {
-                                    gd.levelsManager.deleteAsync(level, new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            long id = level.getId();
+                    showConfirm(getString(R.string.delete_levels),
+                            getString(R.string.delete_levels_confirmation), () ->
+                                    gd.levelsManager.deleteAsync(level, () -> {
+                                        long id = level.getId();
 
-                                            MenuScreen target = menu.getCurrentMenu().getNavTarget();
-                                            if (target instanceof InstalledLevelsMenuScreen) {
-                                                InstalledLevelsMenuScreen installedScreen = (InstalledLevelsMenuScreen) target;
-                                                LevelMenuElement el = installedScreen.getElementByLevelId(id, 0);
-                                                if (el != null)
-                                                    installedScreen.deleteElement(el);
-                                                level.setId(0);
-                                                menu.back();
-                                            } else if (target instanceof DownloadLevelsMenuScreen) {
-                                                DownloadLevelsMenuScreen downloadScreen = (DownloadLevelsMenuScreen) target;
-                                                LevelMenuElement el = downloadScreen.getElementByLevelId(id, 0);
-                                                if (el != null)
-                                                    el.setInstalled(false);
+                                        MenuScreen target = menu.getCurrentMenu().getNavTarget();
+                                        if (target instanceof InstalledLevelsMenuScreen) {
+                                            InstalledLevelsMenuScreen installedScreen = (InstalledLevelsMenuScreen) target;
+                                            LevelMenuElement el = installedScreen.getElementByLevelId(id, 0);
+                                            if (el != null)
+                                                installedScreen.deleteElement(el);
+                                            level.setId(0);
+                                            menu.back();
+                                        } else if (target instanceof DownloadLevelsMenuScreen) {
+                                            DownloadLevelsMenuScreen downloadScreen = (DownloadLevelsMenuScreen) target;
+                                            LevelMenuElement el = downloadScreen.getElementByLevelId(id, 0);
+                                            if (el != null)
+                                                el.setInstalled(false);
 
-                                                level.setId(0);
-                                                buildScreen();
-                                            }
+                                            level.setId(0);
+                                            buildScreen();
                                         }
-                                    });
-                                }
-                            },
+                                    }),
                             null
                     );
                     break;
 
                 case ActionMenuElement.INSTALL:
-                    gd.levelsManager.downloadLevel(level, new Callback() {
-                        @Override
-                        public void onDone(Object... objects) {
-                            long id = (long) objects[0];
-                            level.setId(id);
+                    gd.levelsManager.downloadLevel(level, objects -> {
+                        long id = (long) objects[0];
+                        level.setId(id);
 
-                            MenuScreen target = menu.getCurrentMenu().getNavTarget();
-                            if (target instanceof DownloadLevelsMenuScreen) {
-                                DownloadLevelsMenuScreen downloadScreen = (DownloadLevelsMenuScreen) target;
-                                LevelMenuElement el = downloadScreen.getElementByLevelId(id, 0);
-                                if (el != null)
-                                    el.setInstalled(true);
-                            }
-
-                            buildScreen();
+                        MenuScreen target = menu.getCurrentMenu().getNavTarget();
+                        if (target instanceof DownloadLevelsMenuScreen) {
+                            DownloadLevelsMenuScreen downloadScreen = (DownloadLevelsMenuScreen) target;
+                            LevelMenuElement el = downloadScreen.getElementByLevelId(id, 0);
+                            if (el != null)
+                                el.setInstalled(true);
                         }
+
+                        buildScreen();
                     });
                     break;
 
@@ -367,5 +356,4 @@ public class LevelMenuElement
     public String toString() {
         return level.toString();
     }
-
 }

@@ -14,8 +14,6 @@ import static org.happysanta.gd.Helpers.getDp;
 import static org.happysanta.gd.Helpers.getGDActivity;
 import static org.happysanta.gd.Helpers.getString;
 
-// import com.grishka.agdtr.R;
-
 public class OptionsMenuElement
         extends ClickableMenuElement
         implements MenuElement, MenuHandler {
@@ -33,7 +31,8 @@ public class OptionsMenuElement
     protected MenuImageView lockImage = null;
     protected MenuTextView optionTextView = null;
 
-    public OptionsMenuElement(String text, int selectedIndex, MenuHandler handler, String options[], boolean isOnOffToggle, MenuScreen screen) {
+    public OptionsMenuElement(String text, int selectedIndex, MenuHandler handler, String options[],
+                              boolean isOnOffToggle, MenuScreen screen) {
         this.text = text;
         this.selectedIndex = selectedIndex;
         this.handler = handler;
@@ -90,7 +89,8 @@ public class OptionsMenuElement
         lockImage.setScaleType(ImageView.ScaleType.CENTER);
         lockImage.setVisibility(View.GONE);
 
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
         lp.setMargins(0, 0, getDp(ActionMenuElement.LOCK_IMAGE_MARGIN_RIGHT), 0);
         lockImage.setLayoutParams(lp);
         lockImage.setVisibility(View.GONE);
@@ -185,7 +185,7 @@ public class OptionsMenuElement
             m_oZ = false;
             return true;
         } else {
-            return m_oZ;
+            return false;
         }
     }
 
@@ -218,7 +218,7 @@ public class OptionsMenuElement
 
     @Override
     protected void updateViewText() {
-        if (textView != null && textView instanceof MenuTextView)
+        if (textView instanceof MenuTextView)
             ((MenuTextView) textView).setTextOnUiThread(getTextForView());
         if (optionTextView != null) optionTextView.setTextOnUiThread(selectedOption);
     }
@@ -298,5 +298,4 @@ public class OptionsMenuElement
     protected void onHighlightChanged() {
         lockImage.setImageResource(ActionMenuElement.locks[isHighlighted ? 2 : 0]);
     }
-
 }

@@ -121,7 +121,7 @@ public class DownloadFile {
             PowerManager pm = (PowerManager) getGDActivity().getSystemService(Context.POWER_SERVICE);
             lock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
                     getClass().getName());
-            lock.acquire();
+            lock.acquire(10 * 60 * 1000L /*10 minutes*/);
 
             handler.onStart();
         }
@@ -138,8 +138,5 @@ public class DownloadFile {
             lock.release();
             handler.onFinish(error);
         }
-
     }
-
-
 }

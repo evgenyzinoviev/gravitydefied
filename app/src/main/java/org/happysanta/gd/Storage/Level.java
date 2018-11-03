@@ -27,11 +27,14 @@ public class Level {
         unlocked = new int[3];
     }
 
-    public Level(long id, String name, String author, int countEasy, int countMedium, int countHard, int addedTs, int size, long apiId) {
-        this(id, name, author, countEasy, countMedium, countHard, addedTs, size, apiId, 0, 0, 0);
+    public Level(long id, String name, String author, int countEasy, int countMedium, int countHard,
+                 int addedTs, int size, long apiId) {
+        this(id, name, author, countEasy, countMedium, countHard, addedTs,
+                size, apiId, 0, 0, 0);
     }
 
-    public Level(long id, String name, String author, int countEasy, int countMedium, int countHard, int addedTs, int size, long apiId, int unlockedEasy, int unlockedMedium, int unlockedHard) {
+    public Level(long id, String name, String author, int countEasy, int countMedium, int countHard,
+                 int addedTs, int size, long apiId, int unlockedEasy, int unlockedMedium, int unlockedHard) {
         this.id = id;
         this.name = name;
         this.author = author;
@@ -265,36 +268,34 @@ public class Level {
                 && unlocked[2] == 0;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder s = new StringBuilder();
-        s.append("Storage.Level {");
-
-        s.append("id: " + id + ", ");
-        s.append("name: \"" + name + "\", ");
-        s.append("author: \"" + author + "\", ");
-        s.append("count: " + count[0] + "/" + count[1] + "/" + count[2] + ", ");
-        s.append("added_ts: " + addedTs + ", ");
-        s.append("installed_ts: " + installedTs + ", ");
-        s.append("default: " + (_isDefault ? 1 : 0) + ", ");
-        s.append("api_id: " + apiId + ", ");
-        s.append("unlocked: " + unlocked[0] + "/" + unlocked[1] + "/" + unlocked[2] + ", ");
-        s.append("selected_track: " + selectedTrack + ", ");
-        s.append("selected_level: " + selectedLevel + ", ");
-        s.append("selected_league: " + selectedLeague + ", ");
-        s.append("unlocked_levels: " + unlockedLevels + ", ");
-        s.append("unlocked_leagues: " + unlockedLeagues);
-
-        s.append("}");
-        return s.toString();
-    }
-
     private static String getShortDate(long date) {
-        return DateUtils.formatDateTime(getGDActivity(), date * 1000L, DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR | DateUtils.FORMAT_ABBREV_MONTH);
+        return DateUtils.formatDateTime(getGDActivity(), date * 1000L, DateUtils.FORMAT_SHOW_DATE
+                | DateUtils.FORMAT_SHOW_YEAR
+                | DateUtils.FORMAT_ABBREV_MONTH);
     }
 
     private static String getFullDate(long date) {
-        return DateUtils.formatDateTime(getGDActivity(), date * 1000L, DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR);
+        return DateUtils.formatDateTime(getGDActivity(), date * 1000L, DateUtils.FORMAT_SHOW_DATE
+                | DateUtils.FORMAT_SHOW_YEAR);
     }
 
+    @Override
+    public String toString() {
+        return "Storage.Level {" +
+                "id: " + id + ", " +
+                "name: \"" + name + "\", " +
+                "author: \"" + author + "\", " +
+                "count: " + count[0] + "/" + count[1] + "/" + count[2] + ", " +
+                "added_ts: " + addedTs + ", " +
+                "installed_ts: " + installedTs + ", " +
+                "default: " + (_isDefault ? 1 : 0) + ", " +
+                "api_id: " + apiId + ", " +
+                "unlocked: " + unlocked[0] + "/" + unlocked[1] + "/" + unlocked[2] + ", " +
+                "selected_track: " + selectedTrack + ", " +
+                "selected_level: " + selectedLevel + ", " +
+                "selected_league: " + selectedLeague + ", " +
+                "unlocked_levels: " + unlockedLevels + ", " +
+                "unlocked_leagues: " + unlockedLeagues +
+                "}";
+    }
 }

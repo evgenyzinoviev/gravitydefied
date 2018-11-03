@@ -2,8 +2,7 @@ package org.happysanta.gd.Game;
 
 // Decompiled by Jad v1.5.8f. Copyright 2001 Pavel Kouznetsov.
 // Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) fieldsfirst ansi 
-
+// Decompiler options: packimports(3) fieldsfirst ansi
 
 public class FPMath {
 
@@ -14,10 +13,7 @@ public class FPMath {
     public static int HALF_PI = 0x19220; // 1,57080949111162
     //	public static int DOUBLE_PI = 0x6487f; // 6,283192187380789
     public static int PI = 0x3243f; // 3,141588464179446
-    //	public static int ONE = 0x10000;
-    private static int m_jI;
-    private static int m_kI;
-//	private static int SIN_TABLE[] = {
+    //	private static int SIN_TABLE[] = {
 //			0, 1608, 3215, 4821, 6423, 8022, 9616, 11204, 12785, 14359,
 //			15923, 17479, 19024, 20557, 22078, 23586, 25079, 26557, 28020, 29465,
 //			30893, 32302, 33692, 35061, 36409, 37736, 39039, 40319, 41575, 42806,
@@ -39,9 +35,10 @@ public class FPMath {
     public FPMath() {
     }
 
-    public static int divide(int i, int j) {
-        int res = (int) (((long) i << 32) / (long) j >> 16);
-        return res;
+    static {
+        //	public static int ONE = 0x10000;
+        int m_jI = 64;
+        int m_kI = m_jI << 16;
     }
 
     public static int sin(int i) {
@@ -73,8 +70,7 @@ public class FPMath {
             return k - PI;
     }
 
-    static {
-        m_jI = 64;
-        m_kI = m_jI << 16;
+    public static int divide(int i, int j) {
+        return (int) (((long) i << 32) / (long) j >> 16);
     }
 }

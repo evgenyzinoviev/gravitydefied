@@ -6,27 +6,26 @@ import android.view.View;
 
 public interface MenuElementOld {
 
-    public abstract void setText(String s);
+    void setText(String s);
 
     // Why y before x?!
-    public abstract void draw(Canvas g, int y, int x);
+    void draw(Canvas g, int y, int x);
 
-    public abstract boolean isSelectable();
+    boolean isSelectable();
 
-    public abstract int getLineSpacing();
+    int getLineSpacing();
 
-    public abstract void performAction(int i);
+    void performAction(int i);
 
-    public abstract void setFont(Paint font);
+    void setFont(Paint font);
 
-    public abstract int getHeight();
+    int getHeight();
 
-    public abstract int getFirstLineHeight();
+    int getFirstLineHeight();
 
-    public abstract int getXOffset();
+    int getXOffset();
 
-    public abstract void setPressed(boolean flag);
+    void setPressed(boolean flag);
 
-    public abstract View getView();
-
+    View getView();
 }

@@ -58,54 +58,56 @@ public class ClickableMenuElement
 
         layout = new LinearLayout(context);
         layout.setOrientation(LinearLayout.HORIZONTAL);
-        layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        layout.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
 
         helmet = new MenuHelmetView(context);
-        helmet.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        helmet.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.MATCH_PARENT));
 
 		/*if (!isSDK11OrHigher()) {
 			helmet.setMeasuredHeight(true);
 		}*/
 
-        onTouchListener = new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (disabled) return false;
+        onTouchListener = (view, motionEvent) -> {
+            if (disabled) return false;
 
-                switch (motionEvent.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        view.setSelected(true);
-                        helmet.setShow(true);
+            switch (motionEvent.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    view.setSelected(true);
+                    helmet.setShow(true);
 
-                        if (onMenuElementHighlightListener != null)
-                            onMenuElementHighlightListener.onElementHighlight(self);
+                    if (onMenuElementHighlightListener != null)
+                        onMenuElementHighlightListener.onElementHighlight(self);
 
-                        setHighlighted(true);
-                        break;
+                    setHighlighted(true);
+                    break;
 
-                    case MotionEvent.ACTION_CANCEL:
-                    case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_CANCEL:
+                case MotionEvent.ACTION_UP:
+                    view.setSelected(false);
+
+                    if (motionEvent.getAction() == MotionEvent.ACTION_UP &&
+                            inViewBounds(view, (int) motionEvent.getRawX(), (int) motionEvent.getRawY())) {
+                        performAction(MenuScreen.KEY_FIRE);
+                    }
+
+                    setHighlighted(false);
+                    break;
+
+                case MotionEvent.ACTION_MOVE:
+                    if (!inViewBounds(view, (int) motionEvent.getRawX(), (int) motionEvent.getRawY())) {
                         view.setSelected(false);
-
-                        if (motionEvent.getAction() == MotionEvent.ACTION_UP && inViewBounds(view, (int) motionEvent.getRawX(), (int) motionEvent.getRawY())) {
-                            performAction(MenuScreen.KEY_FIRE);
-                        }
-
                         setHighlighted(false);
-                        break;
-
-                    case MotionEvent.ACTION_MOVE:
-                        if (!inViewBounds(view, (int) motionEvent.getRawX(), (int) motionEvent.getRawY())) {
-                            view.setSelected(false);
-                            setHighlighted(false);
-                        } else {
-                            view.setSelected(true);
-                            setHighlighted(true);
-                        }
-                        break;
-                }
-                return true;
+                    } else {
+                        view.setSelected(true);
+                        setHighlighted(true);
+                    }
+                    break;
             }
+            return true;
         };
 
         textView = createMainView();
@@ -160,7 +162,7 @@ public class ClickableMenuElement
     }
 
     protected void updateViewText() {
-        if (textView != null && textView instanceof MenuTextView)
+        if (textView instanceof MenuTextView)
             ((MenuTextView) textView).setTextOnUiThread(getTextForView());
     }
 
@@ -192,5 +194,4 @@ public class ClickableMenuElement
     public boolean isDisabled() {
         return disabled;
     }
-
 }

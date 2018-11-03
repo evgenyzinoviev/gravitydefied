@@ -2,7 +2,6 @@ package org.happysanta.gd.Menu;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -53,12 +52,7 @@ public class DownloadLevelsMenuScreen extends LevelsMenuScreen {
         sortImage = new MenuImageView(context);
         sortImage.setImageResource(R.drawable.ic_sort);
         sortImage.setAdjustViewBounds(true);
-        sortImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showSortDialog();
-            }
-        });
+        sortImage.setOnClickListener(v -> showSortDialog());
         sortImage.setVisibility(View.GONE);
         sortImage.setPadding(getDp(10), 0, 0, 0);
 
@@ -135,19 +129,17 @@ public class DownloadLevelsMenuScreen extends LevelsMenuScreen {
 
         AlertDialog dialog = new AlertDialog.Builder(getGDActivity())
                 .setTitle(getString(R.string.sort_by))
-                .setSingleChoiceItems(items, API.getIdBySortType(sort), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int item) {
-                        API.LevelsSortType newSort = API.getSortTypeById(item);
+                .setSingleChoiceItems(items, API.getIdBySortType(sort), (dialog1, item) -> {
+                    API.LevelsSortType newSort = API.getSortTypeById(item);
 
-                        if (newSort != sort) {
-                            sort = newSort;
-                            // api.setSort(newSort);
-                            Settings.setLevelsSort(sort);
-                            reloadLevels();
-                        }
-
-                        dialog.dismiss();
+                    if (newSort != sort) {
+                        sort = newSort;
+                        // api.setSort(newSort);
+                        Settings.setLevelsSort(sort);
+                        reloadLevels();
                     }
+
+                    dialog1.dismiss();
                 })
                 .create();
 
@@ -163,18 +155,14 @@ public class DownloadLevelsMenuScreen extends LevelsMenuScreen {
                     waitForNetworkConnection.cancel(true);
 
                 waitForNetworkConnection = new WaitForNetworkConnection();
-                waitForNetworkConnection.execute(null, new Runnable() {
-                    @Override
-                    public void run() {
-                        reloadLevels();
-                    }
-                });
+                waitForNetworkConnection.execute(null, (Runnable) this::reloadLevels);
             } else {
                 if (toast != null) {
                     toast.cancel();
                 }
 
-                toast = Toast.makeText(getGDActivity().getApplicationContext(), getString(R.string.no_internet_connection), Toast.LENGTH_SHORT);
+                toast = Toast.makeText(getGDActivity().getApplicationContext(),
+                        getString(R.string.no_internet_connection), Toast.LENGTH_SHORT);
                 toast.show();
             }
 
@@ -228,5 +216,4 @@ public class DownloadLevelsMenuScreen extends LevelsMenuScreen {
         super.deleteElement(el);
         offset--;
     }
-
 }

@@ -7,14 +7,13 @@ import android.view.View;
  */
 public interface MenuElement {
 
-    // public abstract void setText(String s);
+    //void setText(String s);
 
-    public abstract boolean isSelectable();
+    boolean isSelectable();
 
-    public abstract View getView();
+    View getView();
 
-    public abstract void setText(String text);
+    void setText(String text);
 
-    public void performAction(int k);
-
+    void performAction(int k);
 }

@@ -13,22 +13,11 @@ public class MenuImageView extends ImageView {
 
     @Override
     public void setImageResource(final int resid) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                MenuImageView.super.setImageResource(resid);
-            }
-        });
+        runOnUiThread(() -> MenuImageView.super.setImageResource(resid));
     }
 
     @Override
     public void setVisibility(final int visibility) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                MenuImageView.super.setVisibility(visibility);
-            }
-        });
+        runOnUiThread(() -> MenuImageView.super.setVisibility(visibility));
     }
-
 }

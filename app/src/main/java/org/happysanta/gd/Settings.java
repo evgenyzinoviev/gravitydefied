@@ -2,7 +2,6 @@ package org.happysanta.gd;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Build;
 
 import org.happysanta.gd.API.API;
 
@@ -174,11 +173,11 @@ public class Settings {
         if (chars.length < 3) {
             setString(NAME, NAME_DEFAULT);
         } else {
-            String name = "";
+            StringBuilder name = new StringBuilder();
             for (int i = 0; i < 3; i++) {
-                name += String.valueOf((char) chars[i]);
+                name.append(String.valueOf((char) chars[i]));
             }
-            setString(NAME, name);
+            setString(NAME, name.toString());
         }
     }
 
@@ -207,10 +206,6 @@ public class Settings {
     }
 
     private static void editorApply(SharedPreferences.Editor editor) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD)
-            editor.apply();
-        else
-            editor.commit();
+        editor.apply();
     }
-
 }

@@ -60,5 +60,4 @@ public class LevelsResponse {
     public Level[] getLevels() {
         return levels;
     }
-
 }

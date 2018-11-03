@@ -42,12 +42,11 @@ public class LevelHeader {
     }
 
     public boolean isCountsOk() {
-        for (int i = 0; i < counts.length; i++) {
-            if (counts[i] <= 0)
+        for (int count : counts) {
+            if (count <= 0)
                 return false;
         }
 
         return true;
     }
-
 }

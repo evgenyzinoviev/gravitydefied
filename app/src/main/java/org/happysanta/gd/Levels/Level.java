@@ -34,7 +34,7 @@ public class Level {
         m_gI = 0;
         m_gotoI = 0;
         m_forI = 0;
-        points = (int[][]) null;
+        points = null;
         levelName = "levelname";
         m_rI = 0;
         clear();
@@ -148,7 +148,8 @@ public class Level {
         } while (true);
         int k1 = i3;
         int i2 = j3;
-        view._aIIIV((points[pointsCount - 1][0] << 3) >> 16, (points[pointsCount - 1][1] << 3) >> 16, (points[pointsCount - 1][0] + k1 << 3) >> 16, (points[pointsCount - 1][1] + i2 << 3) >> 16);
+        view._aIIIV((points[pointsCount - 1][0] << 3) >> 16, (points[pointsCount - 1][1] << 3) >> 16,
+                (points[pointsCount - 1][0] + k1 << 3) >> 16, (points[pointsCount - 1][1] + i2 << 3) >> 16);
         if (getLevelLoader().isShadowsEnabled())
             _ifiIV(view, k2, l2);
     }

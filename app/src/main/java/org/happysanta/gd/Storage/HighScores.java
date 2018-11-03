@@ -137,16 +137,11 @@ public class HighScores {
 
     @Override
     public String toString() {
-        StringBuilder s = new StringBuilder();
-        s.append("Storage.HighScores {");
-
-        s.append("id: " + id + ", ");
-        s.append("level_id: " + levelId + ", ");
-        s.append("level: " + level + ", ");
-        s.append("track: " + track);
-
-        s.append("}");
-        return s.toString();
+        return "Storage.HighScores {" +
+                "id: " + id + ", " +
+                "level_id: " + levelId + ", " +
+                "level: " + level + ", " +
+                "track: " + track +
+                "}";
     }
-
 }

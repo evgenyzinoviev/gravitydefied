@@ -27,5 +27,4 @@ public class BigTextMenuElement
         textView.setTypeface(Global.robotoCondensedTypeface);
         textView.setLineSpacing(0f, 1.2f);
     }
-
 }

@@ -815,7 +815,6 @@ public class GameView extends View {
 
         for (int k = 0; k < 7; k++)
             m_aeaZ[k] = false;
-
     }
 
     private void _xavV() {
@@ -970,5 +969,4 @@ public class GameView extends View {
             timer = null;
         }
     }
-
 }

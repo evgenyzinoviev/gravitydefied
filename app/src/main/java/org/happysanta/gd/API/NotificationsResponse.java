@@ -72,5 +72,4 @@ public class NotificationsResponse {
     public String getCancelButton() {
         return buttons[1];
     }
-
 }

@@ -2,7 +2,6 @@ package org.happysanta.gd.Storage;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.StatFs;
@@ -28,7 +27,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -43,25 +41,21 @@ import static org.happysanta.gd.Helpers.showAlert;
 public class LevelsManager {
 
     private LevelsDataSource dataSource;
-    private boolean dbOK = false;
+    private boolean dbOK;
     private Level currentLevel;
 
     public LevelsManager() {
         GDActivity gd = getGDActivity();
         dataSource = new LevelsDataSource(gd);
 
-        try {
-            dataSource.open();
+        dataSource.open();
 
-            if (!dataSource.isDefaultLevelCreated()) {
-                Level level = dataSource.createLevel("GDTR original", "Codebrew Software", 10, 10, 10, 0, 0, true, 1);
-                logDebug("LevelsManager: Default level created!");
-                logDebug(level);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            logDebug("LevelsManager: db feels bad :(");
-            // return;
+        if (!dataSource.isDefaultLevelCreated()) {
+            Level level = dataSource.createLevel("GDTR original",
+                    "Codebrew Software", 10, 10,
+                    10, 0, 0, true, 1);
+            logDebug("LevelsManager: Default level created!");
+            logDebug(level);
         }
 
         logDebug("LevelsManager: db feels OK :)");
@@ -141,32 +135,9 @@ public class LevelsManager {
         return dbOK;
     }
 
-    public long install(File file, String name, String author, long apiId) throws Exception {
-        if (!isSpaceAvailable(file.length())) {
-            throw new Exception(getString(R.string.e_no_space_left));
-        }
-
-        InputStream inputStream = new FileInputStream(file);
-        LevelHeader header = Reader.readHeader(inputStream);
-        try {
-            inputStream.close();
-        } catch (IOException e) {
-        }
-
-        if (!header.isCountsOk()) {
-            throw new IOException(file.getName() + " is not valid");
-        }
-
-        Level level = dataSource.createLevel(name, author, header.getCount(0), header.getCount(1), header.getCount(2), 0, getTimestamp(), false, apiId);
-        long id = level.getId();
-        if (id < 1) {
-            throw new Exception(getString(R.string.e_cannot_save_level));
-        }
-
-        File newFile = getMrgFileById(id);
-        copy(file, newFile);
-
-        return id;
+    public static boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        return Environment.MEDIA_MOUNTED.equals(state);
     }
 
     public void installAsync(File file, String name, String author, long apiId, final DoubleCallback callback) {
@@ -276,6 +247,71 @@ public class LevelsManager {
         dataSource.updateLevel(currentLevel);
     }
 
+    public static boolean isExternalStorageReadable() {
+        String state = Environment.getExternalStorageState();
+        return Environment.MEDIA_MOUNTED.equals(state) ||
+                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state);
+    }
+
+    public long install(File file, String name, String author, long apiId) throws Exception {
+        if (!isSpaceAvailable(file.length())) {
+            throw new Exception(getString(R.string.e_no_space_left));
+        }
+
+        InputStream inputStream = new FileInputStream(file);
+        LevelHeader header = Reader.readHeader(inputStream);
+        try {
+            inputStream.close();
+        } catch (IOException e) {
+        }
+
+        if (!header.isCountsOk()) {
+            throw new IOException(file.getName() + " is not valid");
+        }
+
+        Level level = dataSource.createLevel(name, author, header.getCount(0),
+                header.getCount(1), header.getCount(2), 0,
+                getTimestamp(), false, apiId);
+        long id = level.getId();
+        if (id < 1) {
+            throw new Exception(getString(R.string.e_cannot_save_level));
+        }
+
+        File newFile = getMrgFileById(id);
+        copy(file, newFile);
+
+        return id;
+    }
+
+    public HashMap<Long, Long> findInstalledLevels(ArrayList<Long> apiIds) {
+        return dataSource.findInstalledLevels(apiIds);
+    }
+
+    public HighScores getHighScores(int level, int track) {
+        HighScores scores = dataSource.getHighScores(currentLevel.getId(), level, track);
+        // logDebug("LevelsManager.getHighScores: " + scores);
+        return scores;
+    }
+
+    public void saveHighScores(HighScores scores) {
+        dataSource.updateHighScores(scores);
+    }
+
+    public void clearHighScores() {
+        dataSource.clearHighScores(currentLevel.getId());
+    }
+
+    public void clearAllHighScores() {
+        dataSource.clearHighScores(0);
+    }
+
+    public void resetAllLevelsSettings() {
+        dataSource.resetAllLevelsSettings();
+
+        logDebug("All levels now: " + dataSource.getAllLevels());
+        logDebug("Level#1: " + dataSource.getLevel(1));
+    }
+
     public void downloadLevel(final Level level, final Callback successCallback) {
         final GDActivity gd = getGDActivity();
         File outputDir = gd.getCacheDir();
@@ -323,21 +359,22 @@ public class LevelsManager {
                     }
 
                     // Install
-                    installAsync(outputFile, level.getName(), level.getAuthor(), level.getApiId(), new DoubleCallback() {
-                        @Override
-                        public void onDone(Object... objects) {
-                            long id = (long) objects[0];
-                            outputFile.delete();
+                    installAsync(outputFile, level.getName(), level.getAuthor(),
+                            level.getApiId(), new DoubleCallback() {
+                                @Override
+                                public void onDone(Object... objects) {
+                                    long id = (long) objects[0];
+                                    outputFile.delete();
 
-                            if (successCallback != null)
-                                successCallback.onDone(id);
-                        }
+                                    if (successCallback != null)
+                                        successCallback.onDone(id);
+                                }
 
-                        @Override
-                        public void onFail() {
-                            outputFile.delete();
-                        }
-                    });
+                                @Override
+                                public void onFail() {
+                                    outputFile.delete();
+                                }
+                            });
                 }
 
                 @Override
@@ -352,12 +389,10 @@ public class LevelsManager {
                     progress.setProgress(pr);
                 }
             };
-            progress.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                @Override
-                public void onCancel(DialogInterface dialog) {
-                    downloadFile.cancel();
-                    handler.onFinish(new InterruptedException(getString(R.string.e_downloading_was_interrupted)));
-                }
+
+            progress.setOnCancelListener(dialog -> {
+                downloadFile.cancel();
+                handler.onFinish(new InterruptedException(getString(R.string.e_downloading_was_interrupted)));
             });
 
             downloadFile.setDownloadHandler(handler);
@@ -373,68 +408,20 @@ public class LevelsManager {
                 .setTitle(getString(R.string.installed))
                 .setMessage(getString(R.string.successfully_installed))
                 .setPositiveButton(getString(R.string.ok), null)
-                .setNegativeButton(getString(R.string.open_installed), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Menu menu = getGameMenu();
-                        MenuScreen currentMenu = getGameMenu().getCurrentMenu(),
-                                newMenu = menu.managerInstalledScreen;
+                .setNegativeButton(getString(R.string.open_installed), (dialog, which) -> {
+                    Menu menu = getGameMenu();
+                    MenuScreen currentMenu = getGameMenu().getCurrentMenu(),
+                            newMenu = menu.managerInstalledScreen;
 
-                        if (currentMenu == menu.managerDownloadScreen || currentMenu.getNavTarget() == menu.managerDownloadScreen) {
-                            menu.managerDownloadScreen.onHide(menu.managerScreen);
-                        }
-
-                        menu.setCurrentMenu(newMenu, false);
+                    if (currentMenu == menu.managerDownloadScreen ||
+                            currentMenu.getNavTarget() == menu.managerDownloadScreen) {
+                        menu.managerDownloadScreen.onHide(menu.managerScreen);
                     }
+
+                    menu.setCurrentMenu(newMenu, false);
                 })
                 .create();
         success.show();
-    }
-
-    public HashMap<Long, Long> findInstalledLevels(ArrayList<Long> apiIds) {
-        return dataSource.findInstalledLevels(apiIds);
-    }
-
-    public HighScores getHighScores(int level, int track) {
-        HighScores scores = dataSource.getHighScores(currentLevel.getId(), level, track);
-        // logDebug("LevelsManager.getHighScores: " + scores);
-        return scores;
-    }
-
-    public void saveHighScores(HighScores scores) {
-        dataSource.updateHighScores(scores);
-    }
-
-    public void clearHighScores() {
-        dataSource.clearHighScores(currentLevel.getId());
-    }
-
-    public void clearAllHighScores() {
-        dataSource.clearHighScores(0);
-    }
-
-    public void resetAllLevelsSettings() {
-        dataSource.resetAllLevelsSettings();
-
-        logDebug("All levels now: " + dataSource.getAllLevels());
-        logDebug("Level#1: " + dataSource.getLevel(1));
-    }
-
-    public static boolean isExternalStorageWritable() {
-        String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            return true;
-        }
-        return false;
-    }
-
-    public static boolean isExternalStorageReadable() {
-        String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state) ||
-                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-            return true;
-        }
-        return false;
     }
 
     public static File getLevelsDirectory() {
@@ -490,15 +477,13 @@ public class LevelsManager {
             String author = (String) objects[2];
             long apiId = (long) objects[3];
 
-            long id = 0;
+            long id;
             try {
                 id = install(file, name, author, apiId);
             } catch (Throwable e) {
                 return e;
             }
-
             return id;
         }
     }
-
 }

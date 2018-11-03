@@ -20,18 +20,19 @@ public class MenuTitleLinearLayout extends RelativeLayout {
         }
     }
 
-	/*public void forceInvokeOnSizeChangedCallback() {
-		if (onSizeChangedCallback != null) {
-			onSizeChangedCallback.run(getWidth(), getHeight(), 0, 0);
-		}
-	}*/
+/*
+    public void forceInvokeOnSizeChangedCallback() {
+        if (onSizeChangedCallback != null) {
+            onSizeChangedCallback.run(getWidth(), getHeight(), 0, 0);
+        }
+    }
+*/
 
     public void setOnSizeChangedCallback(Callback callback) {
         onSizeChangedCallback = callback;
     }
 
     public interface Callback {
-        public abstract void run(int w, int h, int oldw, int oldh);
+        void run(int w, int h, int oldw, int oldh);
     }
-
 }

@@ -2,7 +2,6 @@ package org.happysanta.gd;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -91,13 +90,15 @@ public class Helpers {
         StackTraceElement[] list = Thread.currentThread().getStackTrace();
         // for (StackTraceElement e: list) {
         for (int i = 0; i < list.length; i++) {
-            sb.append(list[i].toString() + (i < list.length - 1 ? del : ""));
+            sb
+                    .append(list[i].toString())
+                    .append(i < list.length - 1 ? del : "");
         }
         return sb.toString();
     }
 
     public static Bitmap loadBitmapFromDrawable(int id) {
-        BitmapFactory.Options options = null;
+        BitmapFactory.Options options;
         if (!isSDK11OrHigher()) {
             options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
@@ -107,7 +108,7 @@ public class Helpers {
 
     public static Bitmap loadBitmapFromAsset(String name) throws IOException {
         if (name.startsWith("/")) name = name.substring(1);
-        Bitmap bmp = null;
+        Bitmap bmp;
         InputStream s = getGDActivity().getAssets().open(name);
         bmp = BitmapFactory.decodeStream(s);
         s.close();
@@ -128,69 +129,71 @@ public class Helpers {
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
-	/*public static String trimLine(String s, Paint f, int w) {
-		// logDebug("trimLine; s = " + s + ", w = " + w + "; measure = " + f.measureText(s));
-		String points = "...", result = s;
-		float avgWidth = f.measureText("o"), pointsWidth = f.measureText(points);
-		float diff;
-		int i = 0,
-			len = s.length(),
-			half = 0,
-			c = 0,
-			st1 = 0,
-			st2 = len - 1;
+/*
+    public static String trimLine(String s, Paint f, int w) {
+        // logDebug("trimLine; s = " + s + ", w = " + w + "; measure = " + f.measureText(s));
+        String points = "...", result = s;
+        float avgWidth = f.measureText("o"), pointsWidth = f.measureText(points);
+        float diff;
+        int i = 0,
+                len = s.length(),
+                half = 0,
+                c = 0,
+                st1 = 0,
+                st2 = len - 1;
 
-		if (s.equals("") || f.measureText(s) <= w) return s;
+        if (s.equals("") || f.measureText(s) <= w) return s;
 
-		w -= pointsWidth;
+        w -= pointsWidth;
 
-		int tmpMax = (int)Math.round(Math.floor(w / Math.round(avgWidth / 1.5)) * 2);
-		if (len > tmpMax) {
-			s = s.substring(0, tmpMax);
-			len = s.length();
-		}
+        int tmpMax = (int) Math.round(Math.floor(w / Math.round(avgWidth / 1.5)) * 2);
+        if (len > tmpMax) {
+            s = s.substring(0, tmpMax);
+            len = s.length();
+        }
 
-		while (true) {
-			i++;
-			// if (i >= 100) return s;
-			if (half == 0) {
-				c = Math.round(len / 2);
-			} else {
-				switch (half) {
-					case 1:
-						st2 = c;
-						c -= (st2 - st1) / 2;
-						break;
+        while (true) {
+            i++;
+            // if (i >= 100) return s;
+            if (half == 0) {
+                c = Math.round(len / 2);
+            } else {
+                switch (half) {
+                    case 1:
+                        st2 = c;
+                        c -= (st2 - st1) / 2;
+                        break;
 
-					case 2:
-						st1 = c;
-						c += (st2 - st1) / 2;
-						break;
-				}
-			}
+                    case 2:
+                        st1 = c;
+                        c += (st2 - st1) / 2;
+                        break;
+                }
+            }
 
-			String sub = s.substring(0, c > len - 1 ? len - 1 : c);
-			float subWidth = f.measureText(sub);
+            String sub = s.substring(0, c > len - 1 ? len - 1 : c);
+            float subWidth = f.measureText(sub);
 
-			if (subWidth > w + avgWidth) half = 1;
-			else if (subWidth < w - avgWidth) half = 2;
-			else {
-				diff = subWidth - w;
+            if (subWidth > w + avgWidth) half = 1;
+            else if (subWidth < w - avgWidth) half = 2;
+            else {
+                diff = subWidth - w;
 
-				if (diff > 0) {
-					result = s.substring(0, c - 1);
-					if (!result.equals(s)) result += points;
-				} else  {
-					result = s.substring(0, c + 1);
-					if (!result.equals(s)) result += points;
-				}
+                if (diff > 0) {
+                    result = s.substring(0, c - 1);
+                    if (!result.equals(s)) result += points;
+                } else {
+                    result = s.substring(0, c + 1);
+                    if (!result.equals(s)) result += points;
+                }
 
-				return result;
-			}
-		}
+                return result;
+            }
+        }
 
-		// return s;
-	}*/
+        // return s;
+    }
+*/
 
     public static String getString(int r) {
         return GDActivity.shared.getString(r);
@@ -213,17 +216,11 @@ public class Helpers {
         AlertDialog alertDialog = new AlertDialog.Builder(context)
                 .setTitle(title)
                 .setMessage(message)
-                .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (listener != null) listener.run();
-                    }
+                .setPositiveButton(getString(R.string.ok), (dialog, which) -> {
+                    if (listener != null) listener.run();
                 })
-                .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        if (listener != null) listener.run();
-                    }
+                .setOnCancelListener(dialog -> {
+                    if (listener != null) listener.run();
                 })
                 .create();
         alertDialog.show();
@@ -234,23 +231,14 @@ public class Helpers {
         AlertDialog.Builder alert = new AlertDialog.Builder(context)
                 .setTitle(title)
                 .setMessage(message)
-                .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (onOk != null) onOk.run();
-                    }
+                .setPositiveButton(getString(R.string.ok), (dialog, which) -> {
+                    if (onOk != null) onOk.run();
                 })
-                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (onCancel != null) onCancel.run();
-                    }
+                .setNegativeButton(getString(R.string.cancel), (dialog, which) -> {
+                    if (onCancel != null) onCancel.run();
                 })
-                .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        if (onCancel != null) onCancel.run();
-                    }
+                .setOnCancelListener(dialog -> {
+                    if (onCancel != null) onCancel.run();
                 });
         alert.show();
     }
@@ -260,13 +248,14 @@ public class Helpers {
     }
 
     public static boolean isSDK10OrLower() {
-        return Build.VERSION.SDK_INT <= 10;
+        return false;
     }
 
     public static String getAppVersion() {
         String v = "0.0";
         try {
-            PackageInfo pInfo = GDActivity.shared.getPackageManager().getPackageInfo(GDActivity.shared.getPackageName(), 0);
+            PackageInfo pInfo = GDActivity.shared.getPackageManager()
+                    .getPackageInfo(GDActivity.shared.getPackageName(), 0);
             v = pInfo.versionName;
         } catch (PackageManager.NameNotFoundException e) {
         }
@@ -277,10 +266,10 @@ public class Helpers {
         if (data == null) {
             return "";
         }
-        StringBuffer sb = new StringBuffer(data.length);
-        for (int i = 0; i < data.length; i++) {
-            if (data[i] == 0) break;
-            sb.append(cp1251Map[data[i] & 0xFF]);
+        StringBuilder sb = new StringBuilder(data.length);
+        for (byte aData : data) {
+            if (aData == 0) break;
+            sb.append(cp1251Map[aData & 0xFF]);
         }
         return sb.toString();
     }
@@ -306,5 +295,4 @@ public class Helpers {
             return Character.toUpperCase(first) + s.substring(1);
         }
     }
-
 }

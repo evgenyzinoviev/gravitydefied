@@ -30,7 +30,7 @@ public class Bitmap {
 
     public android.graphics.Bitmap bitmap;
     protected static GDBitmapHolder holders[];
-    protected static Bitmap empty = null;
+    protected static Bitmap empty;
 
     Bitmap(android.graphics.Bitmap b) {
         bitmap = b;
@@ -179,7 +179,5 @@ public class Bitmap {
             System.arraycopy(bitmaps, 0, this.bitmaps, 0, bitmaps.length);
             isArray = true;
         }
-
     }
-
 }

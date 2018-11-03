@@ -2,8 +2,7 @@ package org.happysanta.gd.Game;
 
 // Decompiled by Jad v1.5.8f. Copyright 2001 Pavel Kouznetsov.
 // Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) fieldsfirst ansi 
-
+// Decompiler options: packimports(3) fieldsfirst ansi
 
 import org.happysanta.gd.Menu.SimpleMenuElement;
 
@@ -29,6 +28,5 @@ public class k {
         m_doZ = true;
         for (int i = 0; i < 6; i++)
             m_ifan[i].init();
-
     }
 }

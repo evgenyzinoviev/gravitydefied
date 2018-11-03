@@ -20,7 +20,7 @@ public class KeyboardController implements View.OnTouchListener {
     public static final int PADDING = 15;
     private static final boolean DISABLE_MOVE = false;
 
-    private static int PADDING_DP = 0;
+    private static int PADDING_DP;
 
     private GDActivity gd;
     private int[] buf;
@@ -166,24 +166,29 @@ public class KeyboardController implements View.OnTouchListener {
         return true;
     }
 
-    private synchronized void log(Object o, boolean last) {
-        String logStr = o.toString();
-        Log.d("GD Keyboard", o.toString());
+    private static int whichButton(Rect rect, int x, int y) {
+        int cellW = rect.width() / 3,
+                cellH = rect.height() / 3;
 
-        if (last)
-            Log.d("", "");
+        // logBuffer("cellW="+cellW+", cellH="+cellH);
 
-		/*if (!gd.isMenuShown()) {
-			logBuffer.append("<");
-			logBuffer.append(getCurrentTime());
-			logBuffer.append("> ");
+        int posX, posY;
 
-			logBuffer.append(logStr);
-			logBuffer.append("\n");
+        if (x < PADDING_DP + cellW)
+            posX = 0;
+        else if (x < PADDING_DP + cellW * 2)
+            posX = 1;
+        else
+            posX = 2;
 
-			if (last)
-				logBuffer.append("\n");
-		}*/
+        if (y < PADDING_DP + cellH)
+            posY = 0;
+        else if (y < PADDING_DP + cellH * 2)
+            posY = 1;
+        else
+            posY = 2;
+
+        return posY * 3 + posX;
     }
 
     private void log(Object o) {
@@ -230,39 +235,38 @@ public class KeyboardController implements View.OnTouchListener {
         return "?";
     }
 
-    private static int whichButton(Rect rect, int x, int y) {
-        int cellW = rect.width() / 3,
-                cellH = rect.height() / 3;
-
-        // logBuffer("cellW="+cellW+", cellH="+cellH);
-
-        int posX = 0, posY = 0;
-
-        if (x < PADDING_DP + cellW)
-            posX = 0;
-        else if (x < PADDING_DP + cellW * 2)
-            posX = 1;
-        else
-            posX = 2;
-
-        if (y < PADDING_DP + cellH)
-            posY = 0;
-        else if (y < PADDING_DP + cellH * 2)
-            posY = 1;
-        else
-            posY = 2;
-
-        return posY * 3 + posX;
+    private static void press(View v) {
+        if (Settings.isVibrateOnTouchEnabled()) {
+            v.performHapticFeedback(
+                    HapticFeedbackConstants.VIRTUAL_KEY,
+                    HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+        }
     }
 
     private static int gameKeyCode(int btnIndex) {
         return btnIndex + 49;
     }
 
-    private static void press(View v) {
-        if (Settings.isVibrateOnTouchEnabled()) {
-            v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+    private synchronized void log(Object o, boolean last) {
+        String logStr = o.toString();
+        Log.d("GD Keyboard", o.toString());
+
+        if (last)
+            Log.d("", "");
+
+/*
+        if (!gd.isMenuShown()) {
+            logBuffer.append("<");
+            logBuffer.append(getCurrentTime());
+            logBuffer.append("> ");
+
+            logBuffer.append(logStr);
+            logBuffer.append("\n");
+
+            if (last)
+                logBuffer.append("\n");
         }
+*/
     }
 
     public void addButton(LinearLayout btn, int x, int y) {
@@ -298,7 +302,5 @@ public class KeyboardController implements View.OnTouchListener {
                 return null;
             return btns[btnIndex];
         }
-
     }
-
 }

@@ -104,18 +104,19 @@ public class SimpleMenuElement extends TimerTask
 
     @Override
     public void performAction(int k) {
-		/*switch (k) {
-			case MenuScreen.KEY_FIRE:
-			case MenuScreen.KEY_RIGHT:
-				m_hc.handleAction(this);
-				m_we.setNavTarget(m_hc.getCurrentMenu());
-				m_hc.setCurrentMenu(m_we, false);
-				// fall through
+/*
+        switch (k) {
+            case MenuScreen.KEY_FIRE:
+            case MenuScreen.KEY_RIGHT:
+                m_hc.handleAction(this);
+                m_we.setNavTarget(m_hc.getCurrentMenu());
+                m_hc.setCurrentMenu(m_we, false);
+                // fall through
 
-			case 3: // '\003'
-			default:
-				return;
-		}*/
+            case 3: // '\003'
+            default:
+        }
+*/
     }
 
 	/* public void _aeV(MenuScreen e1) {
@@ -166,12 +167,13 @@ public class SimpleMenuElement extends TimerTask
         isPressed = flag;
     }
 
-	/*protected void setPressedColor() {
-		font.setColor(ActionMenuElement.PRESSED_COLOR);
-	}
+/*
+    protected void setPressedColor() {
+        font.setColor(ActionMenuElement.PRESSED_COLOR);
+    }
 
-	protected void setNormalColor() {
-		font.setColor(ActionMenuElement.NORMAL_COLOR);
-	}*/
-
+    protected void setNormalColor() {
+        font.setColor(ActionMenuElement.NORMAL_COLOR);
+    }
+*/
 }

@@ -10,12 +10,12 @@ public class Global {
     public static final boolean ACRA_ENABLED = true;
     // public static final boolean ENABLE_TOUCH_HACK_FOR_ALL = false;
 
-    public static float density = 0;
+    public static float density;
     public static Typeface robotoCondensedTypeface;
 
     static {
         density = Helpers.getGDActivity().getResources().getDisplayMetrics().density;
-        robotoCondensedTypeface = Typeface.createFromAsset(Helpers.getGDActivity().getAssets(), "RobotoCondensed-Regular.ttf");
+        robotoCondensedTypeface = Typeface.createFromAsset(Helpers.getGDActivity()
+                .getAssets(), "RobotoCondensed-Regular.ttf");
     }
-
 }

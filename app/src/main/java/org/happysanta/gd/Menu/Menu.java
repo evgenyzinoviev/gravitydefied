@@ -2,7 +2,6 @@ package org.happysanta.gd.Menu;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Environment;
@@ -24,7 +23,6 @@ import org.happysanta.gd.Storage.HighScores;
 import org.happysanta.gd.Storage.Level;
 import org.happysanta.gd.Storage.LevelsManager;
 
-import java.io.File;
 import java.io.UnsupportedEncodingException;
 
 import static org.happysanta.gd.Helpers.getAppVersion;
@@ -38,8 +36,7 @@ import static org.happysanta.gd.Helpers.logDebug;
 import static org.happysanta.gd.Helpers.showAlert;
 import static org.happysanta.gd.Helpers.showConfirm;
 
-public class Menu
-        implements MenuHandler {
+public class Menu implements MenuHandler {
 
     // private final static int SETTINGS_LENGTH = 21;
     // private final static boolean ENABLE_MANAGER = true;
@@ -132,20 +129,22 @@ public class Menu
     private String[] difficultyLevels = null; /* {
 			"Easy", "Medium", "Hard"
 	}; */
-    // private long finishTime = 0L;
-	/*private byte perspectiveOptionEnabled = 0;
-	private byte shadowsOptionEnabled = 0;
-	private byte driverSpriteOptionEnabled = 0;
-	private byte bikerSpriteOptionEnabled = 0;
-	private byte inputOptionValue = 0;
-	private byte lookAheadOptionEnabled = 0;
-	private byte keyboardInMenuEnabled = 1;
-	private byte vibrateOnTouchEnabled = 1;*/
-    // private byte selectedTrackIndex = 0;
-    // private byte selectedLevel = 0;
-    // private byte selectedLeague = 0;
-    // private byte m_aTB = 0;
-    // private byte m_arB = 0;
+    /*
+        private long finishTime = 0L;
+        private byte perspectiveOptionEnabled = 0;
+        private byte shadowsOptionEnabled = 0;
+        private byte driverSpriteOptionEnabled = 0;
+        private byte bikerSpriteOptionEnabled = 0;
+        private byte inputOptionValue = 0;
+        private byte lookAheadOptionEnabled = 0;
+        private byte keyboardInMenuEnabled = 1;
+        private byte vibrateOnTouchEnabled = 1;
+        private byte selectedTrackIndex = 0;
+        private byte selectedLevel = 0;
+        private byte selectedLeague = 0;
+        private byte m_aTB = 0;
+        private byte m_arB = 0;
+    */
     private String[] onOffStrings = null;
     private String[] keysetStrings = null;
     // private EmptyLineMenuElement emptyLine;
@@ -192,51 +191,56 @@ public class Menu
                 m_ajI = -1;
                 m_atI = -1;
                 finishedTime = null;
-                // settingsLoadedOK = false;
-				/*settings = new byte[SETTINGS_LENGTH];
-				for (int l = 0; l < SETTINGS_LENGTH; l++)
-					settings[l] = -127;*/
+/*
+                settingsLoadedOK = false;
+                settings = new byte[SETTINGS_LENGTH];
+                for (int l = 0; l < SETTINGS_LENGTH; l++)
+                    settings[l] = -127;
+*/
 
                 settingsLoadedOK = true;
-				/*try {
-					recordStore = RecordStore.openRecordStore(*//*(Loader.levelsFile != null ? Loader.levelsFile.getName().hashCode() : "") + *//*
-							getLevelsManager().getCurrentId() + "_" + "GDTRStates", true);
-					settingsLoadedOK = true;
-					return;
-				} catch (Exception _ex) {
-					settingsLoadedOK = false;
-				}*/
-
+/*
+                try {
+                    recordStore = RecordStore.openRecordStore( *//*(Loader.levelsFile != null ? Loader.levelsFile.getName().hashCode() : "") + *//*
+                            getLevelsManager().getCurrentId() + "_" + "GDTRStates", true);
+                    settingsLoadedOK = true;
+                    return;
+                } catch (Exception _ex) {
+                    settingsLoadedOK = false;
+                }
+*/
                 break;
 
             case 2:
                 // m_afI = -1;
-				/*RecordEnumeration enumeration;
-				try {
-					enumeration = recordStore.enumerateRecords(null, null, false);
-				} catch (*//*RecordStoreNotOpen*//*Exception _ex) {
-					return;
-				}
-				if (enumeration.numRecords() > 0) {
-					byte[] abyte0;
-					try {
-						abyte0 = enumeration.nextRecord();
-						enumeration.reset();
-						m_afI = enumeration.nextRecordId();
-					} catch (Exception _ex) {
-						return;
-					}
-					if (abyte0.length <= SETTINGS_LENGTH)
-						System.arraycopy(abyte0, 0, settings, 0, abyte0.length);
-					enumeration.destroy();
-				}*/
+/*
+                RecordEnumeration enumeration;
+                try {
+                    enumeration = recordStore.enumerateRecords(null, null, false);
+                } catch (*//*RecordStoreNotOpen*//*Exception _ex) {
+                return;
+        }
+        if (enumeration.numRecords() > 0) {
+            byte[] abyte0;
+            try {
+                abyte0 = enumeration.nextRecord();
+                enumeration.reset();
+                m_afI = enumeration.nextRecordId();
+            } catch (Exception _ex) {
+                return;
+            }
+            if (abyte0.length <= SETTINGS_LENGTH)
+                System.arraycopy(abyte0, 0, settings, 0, abyte0.length);
+            enumeration.destroy();
+        }
+*/
 
-				/*byte[] chars;
-				if ((chars = readNameChars(16, (byte) -1)) != null && chars[0] != -1) {
-					for (int i = 0; i < 3; i++)
-						nameChars[i] = chars[i];
-
-				}*/
+/*
+                byte[] chars;
+                if ((chars = readNameChars(16, (byte) -1)) != null && chars[0] != -1) {
+                    System.arraycopy(chars, 0, nameChars, 0, 3);
+                }
+*/
 
                 nameChars = Settings.getName();
                 // if (nameChars[0] == 82 && nameChars[1] == 75 && nameChars[2] == 69) {
@@ -249,41 +253,47 @@ public class Menu
                             loader.names[1].length - 1,
                             loader.names[2].length - 1
                     );
-                    // logDebug(level);
-                    // leaguesUnlockedCount = 3;
-                    // levelsUnlockedCount = 2;
-					/*unlockedTracks[0] = (byte) (loader.names[0].length - 1);
-					unlockedTracks[1] = (byte) (loader.names[1].length - 1);
-					unlockedTracks[2] = (byte) (loader.names[2].length - 1);*/
+/*
+                    logDebug(level);
+                    leaguesUnlockedCount = 3;
+                    levelsUnlockedCount = 2;
+                    unlockedTracks[0] = (byte) (loader.names[0].length - 1);
+                    unlockedTracks[1] = (byte) (loader.names[1].length - 1);
+                    unlockedTracks[2] = (byte) (loader.names[2].length - 1);
+*/
                 } else if (level.isSettingsClear()) {
                     level.setUnlockedLeagues(0);
                     level.setUnlockedLevels(1);
                     level.setUnlocked(0, 0, -1);
-                    // leaguesUnlockedCount = 0;
-                    // levelsUnlockedCount = 1;
-					/*unlockedTracks[0] = 0;
-					unlockedTracks[1] = 0;
-					unlockedTracks[2] = -1;*/
+/*
+                    leaguesUnlockedCount = 0;
+                    levelsUnlockedCount = 1;
+                    unlockedTracks[0] = 0;
+                    unlockedTracks[1] = 0;
+                    unlockedTracks[2] = -1;
+*/
                 }
                 break;
 
             case 3:
                 // Load settings
-				/*perspectiveOptionEnabled = readSetting(0, perspectiveOptionEnabled);
-				shadowsOptionEnabled = readSetting(1, shadowsOptionEnabled);
-				driverSpriteOptionEnabled = readSetting(2, driverSpriteOptionEnabled);
-				bikerSpriteOptionEnabled = readSetting(3, bikerSpriteOptionEnabled);
-				lookAheadOptionEnabled = readSetting(4, lookAheadOptionEnabled);
+/*
+                perspectiveOptionEnabled = readSetting(0, perspectiveOptionEnabled);
+                shadowsOptionEnabled = readSetting(1, shadowsOptionEnabled);
+                driverSpriteOptionEnabled = readSetting(2, driverSpriteOptionEnabled);
+                bikerSpriteOptionEnabled = readSetting(3, bikerSpriteOptionEnabled);
+                lookAheadOptionEnabled = readSetting(4, lookAheadOptionEnabled);
 
-				keyboardInMenuEnabled = readSetting(13, keyboardInMenuEnabled);
-				inputOptionValue = readSetting(14, inputOptionValue);*/
+                keyboardInMenuEnabled = readSetting(13, keyboardInMenuEnabled);
+                inputOptionValue = readSetting(14, inputOptionValue);
                 // m_arB = readSetting(15, m_arB); // nonsense
 
-				/*vibrateOnTouchEnabled = readSetting(19, keyboardInMenuEnabled);
+                vibrateOnTouchEnabled = readSetting(19, keyboardInMenuEnabled);
 
-				selectedLevel = readSetting(10, selectedLevel);
-				selectedTrackIndex = readSetting(11, selectedTrackIndex);
-				selectedLeague = readSetting(12, selectedLeague);*/
+                selectedLevel = readSetting(10, selectedLevel);
+                selectedTrackIndex = readSetting(11, selectedTrackIndex);
+                selectedLeague = readSetting(12, selectedLeague);
+*/
 
                 // byte levelsSort = readSetting(20, (byte)0);
 
@@ -500,6 +510,7 @@ public class Menu
                 levelScreen = new MenuScreen("", null);
                 break;
         }
+
     }
 
 	/*public void reloadLevels() {
@@ -842,9 +853,7 @@ public class Menu
         gd.physEngine._charvV();
         gd.gameToMenu();
 
-        do {
-            if (!gd.isMenuShown() || !gd.alive || currentMenu == null)
-                break;
+        while (gd.isMenuShown() && gd.alive && currentMenu != null) {
 
             if (gd.m_cZ) {
                 while (gd.m_cZ) {
@@ -896,15 +905,14 @@ public class Menu
                     l4 = l3;
                 }
             }
-        } while (true);
+        }
 
         logDebug("[Menu.showMenu] out loop");
 
         gd.m_forJ += System.currentTimeMillis() - l1;
-        if (view != null)
-            view.drawTimer = true;
+        view.drawTimer = true;
 
-        if (currentMenu == null && gd != null) {
+        if (currentMenu == null) {
             logDebug("[Menu.showMenu] currentMenu == null, set alive = false");
             gd.exiting = true;
             gd.alive = false;
@@ -925,13 +933,13 @@ public class Menu
 
     public void _tryIV(int k) {
         // logDebug("_tryIV k = " + k);
-        if (getGDView().getGameAction(k) != 8)
+        if (GameView.getGameAction(k) != 8)
             keyPressed(k);
     }
 
     public void keyPressed(int k) {
         if (currentMenu != null && !menuDisabled)
-            switch (getGDView().getGameAction(k)) {
+            switch (GameView.getGameAction(k)) {
                 case MenuScreen.KEY_UP: // up
                     currentMenu.performAction(MenuScreen.KEY_UP);
                     return;
@@ -987,7 +995,6 @@ public class Menu
     public void ok() {
         if (currentMenu != null) {
             currentMenu.performAction(1);
-            return;
         }
     }
 
@@ -1195,12 +1202,7 @@ public class Menu
                         getLevelsManager().clearHighScores();
                         showAlert(getString(R.string.cleared), getString(R.string.cleared_text), null);
                     } else if (currentMenu == resetScreen) {
-                        showAlert(getString(R.string.reset), getString(R.string.reset_text), new Runnable() {
-                            @Override
-                            public void run() {
-                                resetAll();
-                            }
-                        });
+                        showAlert(getString(R.string.reset), getString(R.string.reset_text), this::resetAll);
                     }
                     setCurrentMenu(currentMenu.getNavTarget(), false);
                     return;
@@ -1243,7 +1245,6 @@ public class Menu
                     gd.physEngine.setLeague(leagueSelector.getSelectedOption());
                     m_SZ = true;
                     gd.menuToGame();
-                    return;
                 }
             } else {
                 if (item == nextAction) {
@@ -1320,47 +1321,44 @@ public class Menu
         try {
             getLevelLoader()._doIII(levelIndex, trackIndex);
         } catch (InvalidTrackException e) {
-            showConfirm(getString(R.string.oops), getString(R.string.e_level_damaged), new Runnable() {
-                @Override
-                public void run() {
-                    if (trackSelector.getSelectedOption() + 1 < level.getCount(levelSelector.getSelectedOption())) {
-                        trackSelector.setUnlockedCount(trackSelector.getSelectedOption() + 1);
-                        level.setUnlocked(levelSelector.getSelectedOption(), trackSelector.getUnlockedCount());
-                    } else {
-                        switch (levelSelector.getSelectedOption()) {
-                            case 0:
-                                if (level.getUnlockedLeagues() < 1) {
-                                    level.setUnlockedLeagues(1);
-                                    leagueSelector.setUnlockedCount(level.getUnlockedLeagues());
-                                }
-                                break;
+            showConfirm(getString(R.string.oops), getString(R.string.e_level_damaged), () -> {
+                if (trackSelector.getSelectedOption() + 1 < level.getCount(levelSelector.getSelectedOption())) {
+                    trackSelector.setUnlockedCount(trackSelector.getSelectedOption() + 1);
+                    level.setUnlocked(levelSelector.getSelectedOption(), trackSelector.getUnlockedCount());
+                } else {
+                    switch (levelSelector.getSelectedOption()) {
+                        case 0:
+                            if (level.getUnlockedLeagues() < 1) {
+                                level.setUnlockedLeagues(1);
+                                leagueSelector.setUnlockedCount(level.getUnlockedLeagues());
+                            }
+                            break;
 
-                            case 1:
-                                if (level.getUnlockedLeagues() < 2) {
-                                    level.setUnlockedLeagues(2);
-                                    leagueSelector.setUnlockedCount(level.getUnlockedLeagues());
-                                }
-                                break;
+                        case 1:
+                            if (level.getUnlockedLeagues() < 2) {
+                                level.setUnlockedLeagues(2);
+                                leagueSelector.setUnlockedCount(level.getUnlockedLeagues());
+                            }
+                            break;
 
-                            case 2:
-                                if (level.getUnlockedLeagues() < 3) {
-                                    level.setUnlockedLeagues(3);
-                                    leagueSelector.setOptions(fullLeaguesList);
-                                    leagues = fullLeaguesList;
-                                    leagueSelector.setUnlockedCount(level.getUnlockedLeagues());
-                                }
-                                break;
-                        }
-
-                        int newUnlocked = level.getUnlocked(levelSelector.getSelectedOption()) + 1,
-                                tracksCount = level.getCount(levelSelector.getSelectedOption());
-
-                        if (newUnlocked > tracksCount)
-                            newUnlocked = tracksCount;
-
-                        levelSelector.setUnlockedCount(levelSelector.getUnlockedCount() + 1);
-                        level.setUnlocked(levelSelector.getSelectedOption(), newUnlocked);
+                        case 2:
+                            if (level.getUnlockedLeagues() < 3) {
+                                level.setUnlockedLeagues(3);
+                                leagueSelector.setOptions(fullLeaguesList);
+                                leagues = fullLeaguesList;
+                                leagueSelector.setUnlockedCount(level.getUnlockedLeagues());
+                            }
+                            break;
                     }
+
+                    int newUnlocked = level.getUnlocked(levelSelector.getSelectedOption()) + 1,
+                            tracksCount = level.getCount(levelSelector.getSelectedOption());
+
+                    if (newUnlocked > tracksCount)
+                        newUnlocked = tracksCount;
+
+                    levelSelector.setUnlockedCount(levelSelector.getUnlockedCount() + 1);
+                    level.setUnlocked(levelSelector.getSelectedOption(), newUnlocked);
                 }
             }, null);
         }
@@ -1473,41 +1471,45 @@ public class Menu
         getGDView().addCommand(okCommand);
     }
 
-	/*private int _bbII(int k) {
-		String[] as = RecordStore.listRecordStores();
-		if (saveManager == null || as == null)
-			return 0;
-		int l = 0;
-		for (int i1 = 0; i1 < as.length; i1++)
-			if (as[i1].startsWith("" + k))
-				l++;
+/*
+    private int _bbII(int k) {
+        String[] as = RecordStore.listRecordStores();
+        if (saveManager == null || as == null)
+            return 0;
+        int l = 0;
+        for (String a : as)
+            if (a.startsWith("" + k))
+                l++;
 
-		return l;
-	}*/
+        return l;
+    }
 
-	/*public boolean isKeyboardEnabled() {
-		return keyboardInMenuEnabled == 0;
-	}*/
+    public boolean isKeyboardEnabled() {
+        return keyboardInMenuEnabled == 0;
+    }
 
-    // public boolean isVibrateOnTouchEnabled() {
-    //	return vibrateOnTouchEnabled == 0;
-    //}
-
-	/*public void hideKeyboard(boolean firstRun) {
-		if (!Settings.isKeyboardInMenuEnabled()) {
-			getGDActivity().hideKeyboardLayout();
-			// MenuScreen.setSize(getGDView().getScaledWidth(), getGDView().getScaledHeight());
-		} else if (firstRun) {
-			getGDActivity().showKeyboardLayout();
-		}*//*else {
-			// MenuScreen.setSize(getGDView().getScaledWidth(), getGDView().getScaledHeight() - getGDActivity().getButtonsLayoutHeight());
-		}*//*
-	}
-
-	public void showKeyboard() {
-		getGDActivity().showKeyboardLayout();
-		// MenuScreen.setSize(getGDView().getScaledWidth(), getGDView().getScaledHeight() - getGDActivity().getButtonsLayoutHeight());
-	}*/
+    public boolean isVibrateOnTouchEnabled() {
+        return vibrateOnTouchEnabled == 0;
+    }
+*/
+/*
+    public void hideKeyboard(boolean firstRun) {
+        if (!Settings.isKeyboardInMenuEnabled()) {
+            getGDActivity().hideKeyboardLayout();
+            // MenuScreen.setSize(getGDView().getScaledWidth(), getGDView().getScaledHeight());
+        } else if (firstRun) {
+            getGDActivity().showKeyboardLayout();
+        } else {
+            MenuScreen.setSize(getGDView().getScaledWidth(), getGDView().getScaledHeight() - getGDActivity().getButtonsLayoutHeight());
+        }
+    }
+*/
+/*
+    public void showKeyboard() {
+        getGDActivity().showKeyboardLayout();
+        // MenuScreen.setSize(getGDView().getScaledWidth(), getGDView().getScaledHeight() - getGDActivity().getButtonsLayoutHeight());
+    }
+*/
 
     public void installFromFileBrowse() {
         if (!LevelsManager.isExternalStorageReadable()) {
@@ -1517,41 +1519,37 @@ public class Menu
 
         final GDActivity gd = getGDActivity();
         FileDialog fileDialog = new FileDialog(gd, Environment.getExternalStorageDirectory(), ".mrg");
-        fileDialog.addFileListener(new FileDialog.FileSelectedListener() {
-            public void fileSelected(final File file) {
-                final EditText input = new EditText(gd);
-                input.setInputType(InputType.TYPE_CLASS_TEXT);
+        fileDialog.addFileListener(file -> {
+            final EditText input = new EditText(gd);
+            input.setInputType(InputType.TYPE_CLASS_TEXT);
 
-                AlertDialog.Builder alert = new AlertDialog.Builder(gd)
-                        .setTitle(getString(R.string.enter_levels_name_title))
-                        .setMessage(getString(R.string.enter_levels_name))
-                        .setView(input)
-                        .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                boolean ok = true;
-                                String name = input.getText().toString();
-                                if (name.equals("")) name = file.getName();
+            AlertDialog.Builder alert = new AlertDialog.Builder(gd)
+                    .setTitle(getString(R.string.enter_levels_name_title))
+                    .setMessage(getString(R.string.enter_levels_name))
+                    .setView(input)
+                    .setPositiveButton(getString(R.string.ok), (dialog, whichButton) -> {
+                        boolean ok = true;
+                        String name = input.getText().toString();
+                        if (name.equals("")) name = file.getName();
 
-                                ProgressDialog progressDialog = ProgressDialog.show(gd, getString(R.string.install), getString(R.string.installing), true);
+                        ProgressDialog progressDialog = ProgressDialog.show(gd, getString(R.string.install), getString(R.string.installing), true);
 
-                                try {
-                                    gd.levelsManager.install(file, name, "", 0);
-                                } catch (Exception e) {
-                                    ok = false;
-                                    e.printStackTrace();
-                                    showAlert(getString(R.string.error), e.getMessage(), null);
-                                } finally {
-                                    progressDialog.dismiss();
-                                }
+                        try {
+                            gd.levelsManager.install(file, name, "", 0);
+                        } catch (Exception e) {
+                            ok = false;
+                            e.printStackTrace();
+                            showAlert(getString(R.string.error), e.getMessage(), null);
+                        } finally {
+                            progressDialog.dismiss();
+                        }
 
-                                if (ok) {
-                                    gd.levelsManager.showSuccessfullyInstalledDialog();
-                                }
-                            }
-                        })
-                        .setNegativeButton(getString(R.string.cancel), null);
-                alert.show();
-            }
+                        if (ok) {
+                            gd.levelsManager.showSuccessfullyInstalledDialog();
+                        }
+                    })
+                    .setNegativeButton(getString(R.string.cancel), null);
+            alert.show();
         });
         fileDialog.showDialog();
     }
@@ -1559,5 +1557,4 @@ public class Menu
     public static boolean isNameCheat(byte[] chars) {
         return chars[0] == 82 && chars[1] == 75 && chars[2] == 69;
     }
-
 }

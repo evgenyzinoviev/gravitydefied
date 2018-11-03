@@ -42,11 +42,9 @@ public class Reader {
                     nameLen++;
                 } while (true);
             }
-
         }
         din.close();
 
         return header;
     }
-
 }

@@ -179,7 +179,7 @@ public class LevelsMenuScreen extends MenuScreen {
     }
 
     public void highlightElementAt(int index) {
-        LevelMenuElement item = null;
+        LevelMenuElement item;
         try {
             item = (LevelMenuElement) elements.elementAt(index);
         } catch (Exception e) {
@@ -424,7 +424,5 @@ public class LevelsMenuScreen extends MenuScreen {
             levels.addAll(Arrays.asList(_levels));
             return null;
         }
-
     }
-
 }

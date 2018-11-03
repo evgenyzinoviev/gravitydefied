@@ -2,11 +2,11 @@ package org.happysanta.gd.Menu;
 
 public interface MenuHandler {
 
-    public abstract MenuScreen getCurrentMenu();
+    MenuScreen getCurrentMenu();
 
-    public abstract void setCurrentMenu(MenuScreen e, boolean flag);
+    void setCurrentMenu(MenuScreen e, boolean flag);
 
-    // public abstract void destroy();
+    //void destroy();
 
-    public abstract void handleAction(MenuElement item);
+    void handleAction(MenuElement item);
 }

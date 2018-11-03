@@ -30,5 +30,4 @@ public class WaitForNetworkConnection extends AsyncTask<Object, Void, Void> {
         logDebug("Network OK, callback.run() now...");
         callback.run();
     }
-
 }

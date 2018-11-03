@@ -44,7 +44,8 @@ public class MenuScreen
 
         layout = new MenuLinearLayout(context);
         layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setPadding(getDp(LAYOUT_LEFT_PADDING), getDp(LAYOUT_TOP_PADDING), getDp(LAYOUT_LEFT_PADDING), getDp(LAYOUT_BOTTOM_PADDING));
+        layout.setPadding(getDp(LAYOUT_LEFT_PADDING), getDp(LAYOUT_TOP_PADDING),
+                getDp(LAYOUT_LEFT_PADDING), getDp(LAYOUT_BOTTOM_PADDING));
 
         // Disable multi-touch in menu
         if (isSDK11OrHigher())
@@ -69,7 +70,7 @@ public class MenuScreen
 
     public void performAction(int k) {
         // logDebug("MenuScreen.performAction: k = " + k);
-        int from = 0;
+        int from;
         switch (k) {
             default:
                 // logDebug("selectedIndex = " + selectedIndex);
@@ -181,13 +182,10 @@ public class MenuScreen
 
     protected void updateTitle() {
         final GDActivity gd = getGDActivity();
-        gd.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                gd.menuTitleTextView.setText(title);
-                // activity.menuTitleTextView.invalidate();
-                gd.titleLayout.invalidate();
-            }
+        gd.runOnUiThread(() -> {
+            gd.menuTitleTextView.setText(title);
+            // activity.menuTitleTextView.invalidate();
+            gd.titleLayout.invalidate();
         });
     }
 
@@ -269,9 +267,9 @@ public class MenuScreen
     public void setIsTextScreen(boolean isTextScreen) {
         this.isTextScreen = isTextScreen;
     }
-
-	/*public boolean isTextScreen() {
-		return isTextScreen;
-	}*/
-
+/*
+    public boolean isTextScreen() {
+        return isTextScreen;
+    }
+*/
 }

@@ -25,7 +25,6 @@ public class ObservableScrollView
     }
 
     public interface OnScrollListener {
-        public abstract void onScroll(ObservableScrollView scrollView, int x, int y, int oldx, int oldy);
+        void onScroll(ObservableScrollView scrollView, int x, int y, int oldx, int oldy);
     }
-
 }

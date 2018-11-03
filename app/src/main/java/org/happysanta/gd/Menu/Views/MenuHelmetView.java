@@ -70,7 +70,8 @@ public class MenuHelmetView extends View {
 
             canvas.save();
             canvas.rotate(angle, helmet.getWidthDp() / 2, y + helmet.getHeightDp() / 2);
-            canvas.drawBitmap(helmet.bitmap, new Rect(0, 0, helmet.getWidth(), helmet.getHeight()), new RectF(0, y, helmet.getWidthDp(), y + helmet.getHeightDp()), null);
+            canvas.drawBitmap(helmet.bitmap, new Rect(0, 0, helmet.getWidth(), helmet.getHeight()),
+                    new RectF(0, y, helmet.getWidthDp(), y + helmet.getHeightDp()), null);
             canvas.restore();
         }
     }
@@ -107,5 +108,4 @@ public class MenuHelmetView extends View {
     public void setMeasuredHeight(boolean setMeasuredHeight) {
         this._setMeasuredHeight = setMeasuredHeight;
     }
-
 }
