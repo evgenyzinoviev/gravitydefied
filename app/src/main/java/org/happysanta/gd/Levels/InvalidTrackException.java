@@ -5,8 +5,8 @@ package org.happysanta.gd.Levels;
  */
 public class InvalidTrackException extends Exception {
 
-	public InvalidTrackException(Exception e) {
-		super(e);
-	}
+    public InvalidTrackException(Exception e) {
+        super(e);
+    }
 
 }

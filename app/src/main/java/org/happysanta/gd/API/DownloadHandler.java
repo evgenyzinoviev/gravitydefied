@@ -5,10 +5,10 @@ package org.happysanta.gd.API;
  */
 public interface DownloadHandler {
 
-	public abstract void onStart();
+    public abstract void onStart();
 
-	public abstract void onFinish(Throwable error);
+    public abstract void onFinish(Throwable error);
 
-	public abstract void onProgress(int progress);
+    public abstract void onProgress(int progress);
 
 }

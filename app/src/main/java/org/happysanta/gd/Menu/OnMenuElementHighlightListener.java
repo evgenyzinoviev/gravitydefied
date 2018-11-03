@@ -5,6 +5,6 @@ package org.happysanta.gd.Menu;
  */
 public interface OnMenuElementHighlightListener {
 
-	public abstract void onElementHighlight(ClickableMenuElement el);
+    public abstract void onElementHighlight(ClickableMenuElement el);
 
 }

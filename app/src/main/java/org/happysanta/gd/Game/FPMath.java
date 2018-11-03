@@ -7,16 +7,16 @@ package org.happysanta.gd.Game;
 
 public class FPMath {
 
-	//	public static final int UNSIGNED_MASK = 0x7fffffff;
+    //	public static final int UNSIGNED_MASK = 0x7fffffff;
 //	public static final int SIGN_MASK = 0x80000000;
-	//public static final int m_ifI;
+    //public static final int m_ifI;
 //	public static final int m_aI = 1;
-	public static int HALF_PI = 0x19220; // 1,57080949111162
-	//	public static int DOUBLE_PI = 0x6487f; // 6,283192187380789
-	public static int PI = 0x3243f; // 3,141588464179446
-	//	public static int ONE = 0x10000;
-	private static int m_jI;
-	private static int m_kI;
+    public static int HALF_PI = 0x19220; // 1,57080949111162
+    //	public static int DOUBLE_PI = 0x6487f; // 6,283192187380789
+    public static int PI = 0x3243f; // 3,141588464179446
+    //	public static int ONE = 0x10000;
+    private static int m_jI;
+    private static int m_kI;
 //	private static int SIN_TABLE[] = {
 //			0, 1608, 3215, 4821, 6423, 8022, 9616, 11204, 12785, 14359,
 //			15923, 17479, 19024, 20557, 22078, 23586, 25079, 26557, 28020, 29465,
@@ -36,45 +36,45 @@ public class FPMath {
 //			49358, 49899, 50431, 50955
 //	};
 
-	public FPMath() {
-	}
+    public FPMath() {
+    }
 
-	public static int divide(int i, int j) {
-		int res = (int) (((long) i << 32) / (long) j >> 16);
-		return res;
-	}
+    public static int divide(int i, int j) {
+        int res = (int) (((long) i << 32) / (long) j >> 16);
+        return res;
+    }
 
-	public static int sin(int i) {
-		float fi = i / (float) 0xFFFF;
-		return (int) Math.round(Math.sin(fi) * 65536);
-	}
+    public static int sin(int i) {
+        float fi = i / (float) 0xFFFF;
+        return (int) Math.round(Math.sin(fi) * 65536);
+    }
 
-	public static int _doII(int i) {
-		return sin(HALF_PI - i);
-	}
+    public static int _doII(int i) {
+        return sin(HALF_PI - i);
+    }
 
-	public static int arctg(int i) {
-		float fi = i / (float) 0xFFFF;
-		return (int) Math.round(Math.atan(fi) * 65536);
-	}
+    public static int arctg(int i) {
+        float fi = i / (float) 0xFFFF;
+        return (int) Math.round(Math.atan(fi) * 65536);
+    }
 
-	public static int _ifIII(int i, int j) {
-		if ((j >= 0 ? j : -j) < 3)
-			return (i <= 0 ? -1 : 1) * HALF_PI;
-		int k = arctg(divide(i, j));
-		if (i > 0)
-			if (j > 0)
-				return k;
-			else
-				return PI + k;
-		if (j > 0)
-			return k;
-		else
-			return k - PI;
-	}
+    public static int _ifIII(int i, int j) {
+        if ((j >= 0 ? j : -j) < 3)
+            return (i <= 0 ? -1 : 1) * HALF_PI;
+        int k = arctg(divide(i, j));
+        if (i > 0)
+            if (j > 0)
+                return k;
+            else
+                return PI + k;
+        if (j > 0)
+            return k;
+        else
+            return k - PI;
+    }
 
-	static {
-		m_jI = 64;
-		m_kI = m_jI << 16;
-	}
+    static {
+        m_jI = 64;
+        m_kI = m_jI << 16;
+    }
 }
