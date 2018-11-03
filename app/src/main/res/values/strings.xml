@@ -4,7 +4,7 @@
     <string name="no">No</string>
     <string name="yes">Yes</string>
     <string name="back">Back</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="go_to_main">Go to Main</string>
     <string name="on">On</string>
@@ -62,18 +62,31 @@
 
     <string name="cleared">Cleared</string>
     <string name="cleared_text">Highscores have been cleared</string>
-    <string name="erase_text1">Clearing the highscores cannot be undone. It will remove all the registered times on all tracks.</string>
+    <string name="erase_text1">Clearing the highscores cannot be undone.
+        It will remove all the registered times on all tracks.
+    </string>
     <string name="erase_text2">Would you like to clear the highscores?</string>
-    <string name="reset_text1">A full reset cannot be undone. It will relock all tracks and leagues and clear back all settings to default. A full reset will restart the application.</string>
+    <string name="reset_text1">A full reset cannot be undone.
+        It will relock all tracks and leagues and clear back all settings to default.
+        A full reset will restart the application.
+    </string>
     <string name="reset_text2">Would you like to do a full reset?</string>
 
     <string name="objective">Objective</string>
-    <string name="objective_text">Race to the finish line as fast as you can without crashing. By leaning forward and backward you can adjust the rotation of your bike. By landing on both wheels after jumping, your bike won\'t crash as easily. Beware, the levels tend to get harder and harder...</string>
+    <string name="objective_text">Race to the finish line as fast as you can without crashing.
+        By leaning forward and backward you can adjust the rotation of your bike.
+        By landing on both wheels after jumping, your bike won\'t crash as easily.
+        Beware, the levels tend to get harder and harder…
+    </string>
 
     <string name="keys">Keys</string>
     <string name="keyset_text"><![CDATA[
 		<b>Keyset 1</b><br/>
-		2 accelerates, 8 brakes, 6 leans forward and 4 leans backward. 1 accelerates and leans backward. 3 accelerates and leans forward. 7 brakes and leans backward. 9 brakes and leans forward.<br/><br/>
+		2 accelerates, 8 brakes, 6 leans forward and 4 leans backward.
+		1 accelerates and leans backward.
+		3 accelerates and leans forward.
+		7 brakes and leans backward.
+		9 brakes and leans forward.<br/><br/>
 		<b>Keyset 2</b><br/>
 		1 accelerates, 4 brakes, 6 leans forward and 5 leans backward.<br/><br/>
 		<b>Keyset 3</b><br/>
@@ -81,9 +94,17 @@
 	]]></string>
 
     <string name="unlocking">Unlocking</string>
-    <string name="unlocking_text">By completing the easier levels, new levels will be unlocked. You will also gain access to higher leagues where more advanced bikes with different characteristics are available.</string>
+    <string name="unlocking_text">By completing the easier levels, new levels will be unlocked.
+        You will also gain access to higher leagues where more advanced bikes with different
+        characteristics are available.
+    </string>
 
-    <string name="highscore_text">The three best times on every track are saved for each league. When beating a time on a track you will be asked to enter your name. The highscores can be viewed from the Play Menu. By pressing left and right in the highscore view you can view the highscore for a specific league. The highscore can be cleared from the options menu.</string>
+    <string name="highscore_text">The three best times on every track are saved for each league.
+        When beating a time on a track you will be asked to enter your name.
+        The highscores can be viewed from the Play Menu.
+        By pressing left and right in the highscore view you can view the highscore for a specific league.
+        The highscore can be cleared from the options menu.
+    </string>
     <string name="no_highscores">No Highscores</string>
 
     <string name="options_text"><![CDATA[
@@ -105,7 +126,8 @@
 
 		<b>Input: Keyset 1,2,3</b><br/>
 		Default: &lt;1&gt;<br/>
-		Determines which type of input should be used when playing. See "Keys" in the help menu for more info.<br/><br/>
+		Determines which type of input should be used when playing.
+		See "Keys" in the help menu for more info.<br/><br/>
 
 		<b>Look ahead: On/Off</b><br/>
 		Default: &lt;On&gt;<br/>
@@ -120,7 +142,8 @@
 		Turns on and off keyboard in menu.<br/><br/>
 
 		<b>Clear highscore</b><br/>
-		Lets you clear the highscores. Here you can also do a "Full Reset" which will reset the game to original state (clear settings, highscores, unlocked levels and leagues).
+		Lets you clear the highscores. Here you can also do a "Full Reset", which will reset the game
+		to its original state (clear settings, highscores, unlocked levels and leagues).
 	]]></string>
     <string name="about_text"><![CDATA[
 		<b>Gravity Defied Classic</b> ported to Android by Gregory Klyushnikov and Eugene Zinoviev<br/>
@@ -141,7 +164,7 @@
     <string name="crashed">Crashed</string>
     <string name="wheelie">Wheelie!</string>
     <string name="finished1">Finished</string>
-    <string name="enjoy">Enjoy...</string>
+    <string name="enjoy">Enjoy!</string>
     <string name="congratulations">Congratulations! You have successfully unlocked a new league: </string>
     <string name="league_unlocked">League unlocked</string>
     <string name="league_unlocked_text">You have successfully unlocked a new league: </string>
@@ -187,9 +210,9 @@
         <item>Hard</item>
     </string-array>
 
-    <string name="download_error">Cannot download levels list.</string>
+    <string name="download_error">Cannot download levels list</string>
     <string name="no_internet_connection">No internet connection</string>
-    <string name="waiting_for_network">Waiting for network connection&#8230;</string>
+    <string name="waiting_for_network">Waiting for network connection…</string>
     <string name="levels_count_tpl"><![CDATA[%1$s <font color="#909090">(%2$s)</font>]]></string>
     <string name="active_name_tpl"><![CDATA[%1$s <font color="#00a000">(Active)</font>]]></string>
 
@@ -207,22 +230,24 @@
     <string name="tracks_tpl"><![CDATA[<font color="#888888">Tracks:</font> %1$s]]></string>
     <string name="install_kb">Install (%1$s Kb)</string>
     <string name="install">Install</string>
-    <string name="installing">Installing..</string>
+    <string name="installing">Installing…</string>
     <string name="load_this_game">Load this game</string>
     <string name="enter_levels_name_title">Levels name</string>
-    <string name="enter_levels_name">Enter levels pack name:</string>
+    <string name="enter_levels_name">Enter level pack name:</string>
     <string name="error">Error</string>
-    <string name="oops">Oops..</string>
-    <string name="please_wait">Please wait..</string>
+    <string name="oops">Oops…</string>
+    <string name="please_wait">Please wait…</string>
     <string name="success">Success</string>
     <string name="successfully_installed">Levels successfully installed.</string>
     <string name="open_installed">Open installed</string>
     <string name="installed">Installed</string>
     <string name="delete">Delete</string>
-    <string name="deleting">Deleting..</string>
-    <string name="downloading">Downloading..</string>
+    <string name="deleting">Deleting…</string>
+    <string name="downloading">Downloading…</string>
     <string name="delete_levels">Delete levels</string>
-    <string name="delete_levels_confirmation">Are you sure you want to delete these levels? This action cannot be undone.</string>
+    <string name="delete_levels_confirmation">Are you sure you want to delete these levels?
+        This action cannot be undone.
+    </string>
     <string name="active">Active</string>
     <string name="unlock_next">Unlock next level</string>
 
@@ -231,6 +256,8 @@
     <string name="e_no_space_left">No space left on device</string>
     <string name="e_cannot_save_level">Cannot save level into database</string>
     <string name="e_no_network_connection">No network connection.</string>
-    <string name="e_level_damaged">Looks like this level is damaged.\nYou can skip it and unlock next level.</string>
+    <string name="e_level_damaged">Looks like this level is damaged.
+        \nYou can skip it and unlock the next level.
+    </string>
 
 </resources>
