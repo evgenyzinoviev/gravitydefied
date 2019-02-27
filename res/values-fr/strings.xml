@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="no">Non</string>
+	<string name="yes">Oui</string>
+	<string name="back">Retour</string>
+	<string name="ok">Ok</string>
+	<string name="cancel">Annuler</string>
+	<string name="go_to_main">Retourner au menu principal</string>
+	<string name="on">Allumé</string>
+	<string name="off">Éteint</string>
+
+	<string name="app_name">Gravity Defied</string>
+	<string name="action_settings">Paramètres</string>
+	<string name="exit">Quitter le jeu</string>
+	<string name="main">Menu principal</string>
+	<string name="options">Options</string>
+	<string name="help">Aide</string>
+	<string name="about">À propos</string>
+
+	<string name="play">Jouer</string>
+	<string name="start">Commencer</string>
+
+	<string name="mods">Mods</string>
+	<string name="highscores">Meilleurs Scores</string>
+	<string name="finished">Terminé !</string>
+	<string name="ingame">En jeu</string>
+	<string name="enter_name">Entrez le nom</string>
+	<string name="level">Niveau</string>
+	<string name="track">Piste</string>
+	<string name="league">Ligue</string>
+	<string name="restart">Redémarrer</string>
+	<string name="send_logs">Envoyer les journaux</string>
+	<string name="next">Suivant</string>
+	<string name="name">Nom</string>
+	<string name="time">Temps</string>
+
+	<string name="perspective">Perspective</string>
+	<string name="shadows">Ombres</string>
+	<string name="input">Entrée</string>
+	<string name="look_ahead">Regardez devant</string>
+	<string name="vibrate_on_touch">Vibrer au toucher</string>
+	<string name="keyboard_in_menu">Clavier dans le menu</string>
+	<string name="clear_highscore">Effacer les meilleurs scores</string>
+	<string name="full_reset">Réinitialisation complète</string>
+	<string name="reset">Réinitialiser</string>
+
+	<string name="installed_mods">Mods installés</string>
+	<string name="download_mods">Télécharger des mods</string>
+	<string name="download_options">Options de téléchargement</string>
+	<string name="installed_levels_text">Ici vous pouvez gérer les niveaux installés.</string>
+	<string name="download_levels_text">Ici vous pouvez télécharger et installer des nouveaux niveaux.</string>
+
+	<string name="cleared">Complété</string>
+	<string name="cleared_text">Les meilleurs scores ont été effacés</string>
+	<string name="erase_text1">Effacer les meilleurs scores est irréversible. Cela va supprimer les temps sur toutes les pistes.</string>
+	<string name="erase_text2">Souhaitez-vous effacer les meilleurs scores ?</string>
+	<string name="reset_text1">Une réinitialisation complète est irréversible. Cela va reverrouiller toutes les pistes et ligues et remettre tous les paramètres par défaut. Une réinitialisation complète va redémarrer l\'application.</string>
+	<string name="reset_text2">Souhaitez-vous faire une réinitialisation complète?</string>
+
+	<string name="objective">Objectif</string>
+	<string name="objective_text">Allez à la ligne d\'arrivée aussi vite que possible sans vous écraser. En vous penchant en avant et en arrière, vous pouvez régler la rotation de votre vélo, les niveaux ont tendance à devenir de plus en plus difficiles...</string>
+
+	<string name="keys">Touches</string>
+	<string name="keyset_text"><b> Clavier 1 </b> <br/> 2 accélèrent, 8 freins, 6 se penche en avant et 4 en arrière. 1 accélère et se penche en arrière. 3 accélère et se penche en avant. 7 freine et se penche en arrière. 9 freins et se penche en avant. <br/> <br/> <b> Clavier 2 </b> <br/> 1 accélère, 4 freins, 6 se penche en avant et 5 en arrière. <br/> <br/> <b> Clavier 3 </b> <br/> 3 accélérations, 6 freins, 5 penchés en avant et 4 penchés en arrière.</string>
+
+	<string name="unlocking">Déverrouillage</string>
+	<string name="unlocking_text">En complétant les niveaux les plus faciles, de nouveaux niveaux seront débloqués. Vous aurez également accès à des ligues supérieures où des vélos plus avancés présentant différentes caractéristiques sont disponibles.</string>
+
+	<string name="highscore_text">The three best times on every track are saved for each league. When beating a time on a track you will be asked to enter your name. The highscores can be viewed from the Play Menu. By pressing left and right in the highscore view you can view the highscore for a specific league. The highscore can be cleared from the options menu.</string>
+	<string name="no_highscores">Pas de meilleur score</string>
+
+	<string name="about_text"><b>Gravity Defied Classic</b> porté sur Android par Gregory Klyushnikov et Eugene Zinoviev<br/> 		Кузница винрара<br/> 		Happy Santa LLC<br/> 		http://gdtr.net \\00A9 2014<br/><br/>  		<b>Gravity Defied - Trial Racing</b> by Codebrew Software<br/> 		http://codebrew.se \\00A9 2004<br/>\n
+   <b>Traduction française</b> par DJALEXKID<br/></string>
+	<string name="ported_text"><font color="#999999">Portage par</font><br/> 		<font color="#000000">Кузница винрара</font><br/> 		<font color="#999999">et</font><br/> 		<font color="#000000">Happy Santa LLC</font><br/>\n
+          <font color="#999999">Traduction française par</font><br/> 		<font color="#000000">DJALEXKID</font></string>
+
+	<string name="crashed">Écrasé</string>
+	<string name="wheelie">Wheelie!</string>
+	<string name="finished1">Terminé</string>
+	<string name="congratulations">Félicitations! Vous avez débloqué une nouvelle league:</string>
+	<string name="league_unlocked">Ligue déverrouillé</string>
+	<string name="league_unlocked_text">Vous avez débloqué une nouvelle ligue:</string>
+	<string name="level_completed_text">Vous avez complété toutes les pistes du niveau.</string>
+	<string name="complete_to_unlock">Complétez plus de pistes pour déverrouiller cette piste/league.</string>
+	<string name="tracks_completed_tpl">%1$d sur %2$d pistes dans <b>%3$s</b> complété.</string>
+
+
+
+
+
+
+
+
+	<string name="download_error">Impossible de télécharger la liste de niveaux.</string>
+	<string name="no_internet_connection">Pas de connexion internet</string>
+	<string name="waiting_for_network">En attente d\'une connexion réseau...</string>
+	<string name="active_name_tpl">%1$s <font color="#00a000">(Actif)</font></string>
+
+	<string name="sort_by">Trier par:</string>
+
+	<string name="author_tpl"><font color="#888888">Auteur:</font> %1$s</string>
+	<string name="added_tpl"><font color="#888888">Ajouté:</font> %1$s</string>
+	<string name="installed_tpl"><font color="#888888">Installé:</font> %1$s</string>
+	<string name="tracks_tpl"><font color="#888888">Pistes:</font> %1$s</string>
+	<string name="install_kb">Installer (%1$s Kb)</string>
+	<string name="install">Installer</string>
+	<string name="installing">Installation...</string>
+	<string name="load_this_game">Charger cette partie</string>
+	<string name="enter_levels_name_title">Nom du niveau</string>
+	<string name="enter_levels_name">Entrer le nom du pack de niveaux ici:</string>
+	<string name="error">Erreur</string>
+	<string name="oops">Oups...</string>
+	<string name="please_wait">Veuillez patienter...</string>
+	<string name="success">Succès</string>
+	<string name="successfully_installed">Niveau installé avec succès.</string>
+	<string name="open_installed">Ouvrir installé</string>
+	<string name="installed">Installé</string>
+	<string name="delete">Supprimer</string>
+	<string name="deleting">Suppression...</string>
+	<string name="downloading">Téléchargement...</string>
+	<string name="delete_levels">Supprimer des niveaux</string>
+	<string name="delete_levels_confirmation">Êtes vous sûr de vouloir supprimer ces niveaux ? Cette action est irréversible.</string>
+	<string name="active">Actif</string>
+	<string name="unlock_next">Débloquer le niveau suivant</string>
+
+	<string name="e_external_storage_is_not_readable">Le stockage externe ne peut être lu.</string>
+	<string name="e_downloading_was_interrupted">Téléchargement interrompu</string>
+	<string name="e_no_space_left">Espace libre insuffisant</string>
+	<string name="e_cannot_save_level">Impossible de sauvegarder le niveau dans la base de données</string>
+	<string name="e_no_network_connection">Pas de connexion réseau.</string>
+	<string name="e_level_damaged">On dirait que ce niveau est endommagé. Vous pouvez le passer et déverrouiller le niveau suivant.</string>
+
+</resources>
